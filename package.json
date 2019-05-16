@@ -1,5 +1,5 @@
 {
-  "name": "react-virtualized",
+  "name": "@logicsoftware/react-virtualized",
   "description": "React components for efficiently rendering large, scrollable lists and tabular data",
   "author": "Brian Vaughn <brian.david.vaughn@gmail.com>",
   "user": "bvaughn",
@@ -57,7 +57,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/bvaughn/react-virtualized.git"
+    "url": "git@github.com:LogicSoftware/react-virtualized.git"
   },
   "keywords": [
     "react",
@@ -184,5 +184,8 @@
     "transform": [
       "loose-envify"
     ]
+  },
+  "directories": {
+    "doc": "docs"
   }
 }
