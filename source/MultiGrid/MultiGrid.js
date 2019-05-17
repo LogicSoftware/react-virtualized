@@ -325,13 +325,13 @@ class MultiGrid extends React.PureComponent {
 
   _columnWidthRightGrid = ({index}) => {
     const {columnCount, fixedColumnCount, columnWidth} = this.props;
-    const {scrollbarSize, showHorizontalScrollbar} = this.state;
+    const {scrollbarSize, showVerticalScrollbar} = this.state;
 
     // An extra cell is added to the count
     // This gives the smaller Grid extra room for offset,
     // In case the main (bottom right) Grid has a scrollbar
     // If no scrollbar, the extra space is overflow:hidden anyway
-    if (showHorizontalScrollbar && index === columnCount - fixedColumnCount) {
+    if (showVerticalScrollbar && index === columnCount - fixedColumnCount) {
       return scrollbarSize;
     }
 
@@ -617,13 +617,13 @@ class MultiGrid extends React.PureComponent {
       rowCount,
       hideBottomLeftGridScrollbar,
     } = props;
-    const {showVerticalScrollbar} = this.state;
+    const {showHorizontalScrollbar} = this.state;
 
     if (!fixedColumnCount) {
       return null;
     }
 
-    const additionalRowCount = showVerticalScrollbar ? 1 : 0,
+    const additionalRowCount = showHorizontalScrollbar ? 1 : 0,
       height = this._getBottomGridHeight(props),
       width = this._getLeftGridWidth(props),
       scrollbarSize = this.state.showVerticalScrollbar
@@ -729,16 +729,16 @@ class MultiGrid extends React.PureComponent {
       scrollLeft,
       hideTopRightGridScrollbar,
     } = props;
-    const {showHorizontalScrollbar, scrollbarSize} = this.state;
+    const {showVerticalScrollbar, scrollbarSize} = this.state;
 
     if (!fixedRowCount) {
       return null;
     }
 
-    const additionalColumnCount = showHorizontalScrollbar ? 1 : 0,
+    const additionalColumnCount = showVerticalScrollbar ? 1 : 0,
       height = this._getTopGridHeight(props),
       width = this._getRightGridWidth(props),
-      additionalHeight = showHorizontalScrollbar ? scrollbarSize : 0;
+      additionalHeight = this.state.showHorizontalScrollbar ? scrollbarSize : 0;
 
     let gridHeight = height,
       style = this._topRightGridStyle;
@@ -791,13 +791,13 @@ class MultiGrid extends React.PureComponent {
 
   _rowHeightBottomGrid = ({index}) => {
     const {fixedRowCount, rowCount, rowHeight} = this.props;
-    const {scrollbarSize, showVerticalScrollbar} = this.state;
+    const {scrollbarSize, showHorizontalScrollbar} = this.state;
 
     // An extra cell is added to the count
     // This gives the smaller Grid extra room for offset,
     // In case the main (bottom right) Grid has a scrollbar
     // If no scrollbar, the extra space is overflow:hidden anyway
-    if (showVerticalScrollbar && index === rowCount - fixedRowCount) {
+    if (showHorizontalScrollbar && index === rowCount - fixedRowCount) {
       return scrollbarSize;
     }
 
