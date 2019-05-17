@@ -6,6 +6,7 @@
   "version": "9.21.1",
   "homepage": "https://github.com/bvaughn/react-virtualized",
   "main": "dist/commonjs/index.js",
+  "types": "index.d.ts",
   "module": "dist/es/index.js",
   "jsnext:main": "dist/es/index.js",
   "license": "MIT",
@@ -53,7 +54,9 @@
   },
   "files": [
     "dist",
-    "styles.css"
+    "types",
+    "styles.css",
+    "index.d.ts"
   ],
   "repository": {
     "type": "git",
