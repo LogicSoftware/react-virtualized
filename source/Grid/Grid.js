@@ -1015,10 +1015,12 @@ class Grid extends React.PureComponent<Props, State> {
     // Force browser to hide scrollbars when we know they aren't necessary.
     // Otherwise once scrollbars appear they may not disappear again.
     // For more info see issue #116
-    const verticalScrollBarSize =
-      totalRowsHeight > height ? instanceProps.scrollbarSize : 0;
     const horizontalScrollBarSize =
       totalColumnsWidth > width ? instanceProps.scrollbarSize : 0;
+    const verticalScrollBarSize =
+      totalRowsHeight + horizontalScrollBarSize > height
+        ? instanceProps.scrollbarSize
+        : 0;
 
     if (
       horizontalScrollBarSize !== this._horizontalScrollBarSize ||
