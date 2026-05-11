@@ -1,7 +1,6 @@
 // @flow
 
 import * as React from 'react';
-import * as ReactDOM from 'react-dom';
 import {
   registerScrollListener,
   unregisterScrollListener,
@@ -47,6 +46,9 @@ type Props = {
 
   /** Width used for server-side rendering */
   serverWidth: number,
+
+  /** Force scrollTop updates when .updatePosition is called, fixing forced header height change updates */
+  updateScrollTopOnUpdatePosition?: boolean,
 };
 
 type State = {
@@ -65,7 +67,7 @@ type DetectElementResize = {
 };
 
 /**
- * Specifies the number of miliseconds during which to disable pointer events while a scroll is in progress.
+ * Specifies the number of milliseconds during which to disable pointer events while a scroll is in progress.
  * This improves performance and makes scrolling smoother.
  */
 export const IS_SCROLLING_TIMEOUT = 150;
@@ -88,6 +90,7 @@ export default class WindowScroller extends React.PureComponent<Props, State> {
   _positionFromLeft = 0;
   _detectElementResize: DetectElementResize;
   _child: ?Element;
+  _windowScrollerRef: {current: HTMLElement | null} = React.createRef();
 
   state = {
     ...getDimensions(this.props.scrollElement, this.props),
@@ -100,7 +103,7 @@ export default class WindowScroller extends React.PureComponent<Props, State> {
     const {onResize} = this.props;
     const {height, width} = this.state;
 
-    const thisNode = this._child || ReactDOM.findDOMNode(this);
+    const thisNode = this._child || this._windowScrollerRef.current;
     if (thisNode instanceof Element && scrollElement) {
       const offset = getPositionOffset(thisNode, scrollElement);
       this._positionFromTop = offset.top;
@@ -117,6 +120,11 @@ export default class WindowScroller extends React.PureComponent<Props, State> {
         height: dimensions.height,
         width: dimensions.width,
       });
+    }
+
+    if (this.props.updateScrollTopOnUpdatePosition === true) {
+      this.__handleWindowScrollEvent();
+      this.__resetIsScrolling();
     }
   }
 
@@ -168,15 +176,21 @@ export default class WindowScroller extends React.PureComponent<Props, State> {
     const {children} = this.props;
     const {isScrolling, scrollTop, scrollLeft, height, width} = this.state;
 
-    return children({
-      onChildScroll: this._onChildScroll,
-      registerChild: this._registerChild,
-      height,
-      isScrolling,
-      scrollLeft,
-      scrollTop,
-      width,
-    });
+    return React.createElement(
+      'div',
+      {
+        ref: this._windowScrollerRef,
+      },
+      children({
+        onChildScroll: this._onChildScroll,
+        registerChild: this._registerChild,
+        height,
+        isScrolling,
+        scrollLeft,
+        scrollTop,
+        width,
+      }),
+    );
   }
 
   _registerChild = element => {

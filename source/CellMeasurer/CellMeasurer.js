@@ -1,7 +1,7 @@
 /** @flow */
 import * as React from 'react';
-import {findDOMNode} from 'react-dom';
 import type {CellMeasureCache} from './types';
+import {cloneElement} from 'react';
 
 type Children = (params: {measure: () => void}) => React.Element<*>;
 
@@ -30,6 +30,8 @@ type Props = {
 export default class CellMeasurer extends React.PureComponent<Props> {
   static __internalCellMeasurerFlag = false;
 
+  _child: {current: HTMLElement | null} = React.createRef();
+
   componentDidMount() {
     this._maybeMeasureCell();
   }
@@ -41,15 +43,31 @@ export default class CellMeasurer extends React.PureComponent<Props> {
   render() {
     const {children} = this.props;
 
-    return typeof children === 'function'
-      ? children({measure: this._measure})
-      : children;
+    const resolvedChildren =
+      typeof children === 'function'
+        ? children({measure: this._measure, registerChild: this._registerChild})
+        : children;
+
+    if (resolvedChildren === null) {
+      return resolvedChildren;
+    }
+
+    return cloneElement(resolvedChildren, {
+      ref: node => {
+        if (typeof resolvedChildren.ref === 'function') {
+          resolvedChildren.ref(node);
+        } else if (resolvedChildren.ref) {
+          resolvedChildren.ref.current = node;
+        }
+        this._child.current = node;
+      },
+    });
   }
 
   _getCellMeasurements() {
     const {cache} = this.props;
 
-    const node = findDOMNode(this);
+    const node = this._child.current;
 
     // TODO Check for a bad combination of fixedWidth and missing numeric width or vice versa with height
 
@@ -143,6 +161,18 @@ export default class CellMeasurer extends React.PureComponent<Props> {
           rowIndex,
         });
       }
+    }
+  };
+
+  _registerChild = element => {
+    if (element && !(element instanceof Element)) {
+      console.warn(
+        'CellMeasurer registerChild expects to be passed Element or null',
+      );
+    }
+    this._child.current = element;
+    if (element) {
+      this._maybeMeasureCell();
     }
   };
 }

@@ -29,6 +29,7 @@ type Props = {
   tabIndex: number,
   width: number,
   rowDirection: string,
+  scrollTop?: number,
 };
 
 type State = {
@@ -39,7 +40,7 @@ type State = {
 const emptyObject = {};
 
 /**
- * Specifies the number of miliseconds during which to disable pointer events while a scroll is in progress.
+ * Specifies the number of milliseconds during which to disable pointer events while a scroll is in progress.
  * This improves performance and makes scrolling smoother.
  */
 export const DEFAULT_SCROLLING_RESET_TIME_INTERVAL = 150;
@@ -238,9 +239,9 @@ class Masonry extends React.PureComponent<Props, State> {
       const batchSize = Math.min(
         cellCount - measuredCellCount,
         Math.ceil(
-          (scrollTop + height + overscanByPixels - shortestColumnSize) /
-            cellMeasurerCache.defaultHeight *
-            width /
+          (((scrollTop + height + overscanByPixels - shortestColumnSize) /
+            cellMeasurerCache.defaultHeight) *
+            width) /
             cellMeasurerCache.defaultWidth,
         ),
       );
@@ -410,7 +411,7 @@ class Masonry extends React.PureComponent<Props, State> {
   _onScroll = event => {
     const {height} = this.props;
 
-    const eventScrollTop = event.target.scrollTop;
+    const eventScrollTop = event.currentTarget.scrollTop;
 
     // When this component is shrunk drastically, React dispatches a series of back-to-back scroll events,
     // Gradually converging on a scrollTop that is within the bounds of the new, smaller height.

@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import * as React from 'react';
 import {polyfill} from 'react-lifecycles-compat';
 import createCallbackMemoizer from '../utils/createCallbackMemoizer';
-import getScrollbarSize from 'dom-helpers/util/scrollbarSize';
+import getScrollbarSize from 'dom-helpers/scrollbarSize';
 
 // @TODO Merge Collection and CollectionView
 
@@ -193,6 +193,7 @@ class CollectionView extends React.PureComponent {
       return {
         scrollLeft: 0,
         scrollTop: 0,
+        scrollPositionChangeReason: SCROLL_POSITION_CHANGE_REASONS.REQUESTED,
       };
     } else if (
       nextProps.scrollLeft !== prevState.scrollLeft ||
@@ -207,6 +208,7 @@ class CollectionView extends React.PureComponent {
           nextProps.scrollTop != null
             ? nextProps.scrollTop
             : prevState.scrollTop,
+        scrollPositionChangeReason: SCROLL_POSITION_CHANGE_REASONS.REQUESTED,
       };
     }
 

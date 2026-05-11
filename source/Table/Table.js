@@ -6,7 +6,6 @@ import clsx from 'clsx';
 import Column from './Column';
 import PropTypes from 'prop-types';
 import * as React from 'react';
-import {findDOMNode} from 'react-dom';
 import Grid, {accessibilityOverscanIndicesGetter} from '../Grid';
 
 import defaultRowRenderer from './defaultRowRenderer';
@@ -263,6 +262,7 @@ export default class Table extends React.PureComponent {
     this._onScroll = this._onScroll.bind(this);
     this._onSectionRendered = this._onSectionRendered.bind(this);
     this._setRef = this._setRef.bind(this);
+    this._setGridElementRef = this._setGridElementRef.bind(this);
   }
 
   forceUpdateGrid() {
@@ -337,6 +337,17 @@ export default class Table extends React.PureComponent {
     }
   }
 
+  getScrollbarWidth() {
+    if (this.GridElement) {
+      const Grid = this.GridElement;
+      const clientWidth = Grid.clientWidth || 0;
+      const offsetWidth = Grid.offsetWidth || 0;
+      return offsetWidth - clientWidth;
+    }
+
+    return 0;
+  }
+
   componentDidMount() {
     this._setScrollbarWidth();
   }
@@ -379,12 +390,12 @@ export default class Table extends React.PureComponent {
     React.Children.toArray(children).forEach((column, index) => {
       const flexStyles = this._getFlexStyleForColumn(
         column,
-        column.props.style,
+        column.props.style || Column.defaultProps.style,
       );
 
       this._cachedColumnStyles[index] = {
-        ...flexStyles,
         overflow: 'hidden',
+        ...flexStyles,
       };
     });
 
@@ -416,6 +427,8 @@ export default class Table extends React.PureComponent {
 
         <Grid
           {...this.props}
+          elementRef={this._setGridElementRef}
+          aria-readonly={null}
           autoContainerWidth
           className={clsx('ReactVirtualized__Table__Grid', gridClassName)}
           cellRenderer={this._createRow}
@@ -545,8 +558,8 @@ export default class Table extends React.PureComponent {
       const newSortDirection = isFirstTimeSort
         ? defaultSortDirection
         : sortDirection === SortDirection.DESC
-          ? SortDirection.ASC
-          : SortDirection.DESC;
+        ? SortDirection.ASC
+        : SortDirection.DESC;
 
       const onClick = event => {
         sortEnabled &&
@@ -661,9 +674,7 @@ export default class Table extends React.PureComponent {
    * Determines the flex-shrink, flex-grow, and width values for a cell (header or column).
    */
   _getFlexStyleForColumn(column, customStyle = {}) {
-    const flexValue = `${column.props.flexGrow} ${column.props.flexShrink} ${
-      column.props.width
-    }px`;
+    const flexValue = `${column.props.flexGrow} ${column.props.flexShrink} ${column.props.width}px`;
 
     const style = {
       ...customStyle,
@@ -724,14 +735,13 @@ export default class Table extends React.PureComponent {
     this.Grid = ref;
   }
 
-  _setScrollbarWidth() {
-    if (this.Grid) {
-      const Grid = findDOMNode(this.Grid);
-      const clientWidth = Grid.clientWidth || 0;
-      const offsetWidth = Grid.offsetWidth || 0;
-      const scrollbarWidth = offsetWidth - clientWidth;
+  _setGridElementRef(ref) {
+    this.GridElement = ref;
+  }
 
-      this.setState({scrollbarWidth});
-    }
+  _setScrollbarWidth() {
+    const scrollbarWidth = this.getScrollbarWidth();
+
+    this.setState({scrollbarWidth});
   }
 }
