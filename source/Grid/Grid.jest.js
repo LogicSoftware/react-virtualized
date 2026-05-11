@@ -1956,6 +1956,62 @@ describe('Grid', () => {
       expect(cellRendererCalls.length).not.toEqual(0);
     });
 
+    it('should prune cached cells to the current window while scrolling', () => {
+      const grid = render(
+        getMarkup({
+          columnCount: 1,
+          columnWidth: 100,
+          height: 40,
+          overscanRowCount: 0,
+          rowHeight: 20,
+          width: 100,
+        }),
+      );
+
+      for (let index = 1; index <= 20; index++) {
+        simulateScroll({grid, scrollTop: index * 20});
+      }
+
+      expect(Object.keys(grid._cellCache).length).toBeLessThanOrEqual(2);
+    });
+
+    it('should clear retained caches on unmount', () => {
+      const grid = render(
+        getMarkup({
+          columnCount: 1,
+          columnWidth: 100,
+          height: 40,
+          isScrollingOptOut: true,
+          overscanRowCount: 0,
+          rowHeight: 20,
+          width: 100,
+        }),
+      );
+
+      render(
+        getMarkup({
+          columnCount: 1,
+          columnWidth: 100,
+          height: 40,
+          isScrolling: true,
+          isScrollingOptOut: true,
+          overscanRowCount: 0,
+          rowHeight: 20,
+          scrollToRow: 10,
+          width: 100,
+        }),
+      );
+
+      expect(Object.keys(grid._cellCache).length).toBeGreaterThan(0);
+      expect(Object.keys(grid._styleCache).length).toBeGreaterThanOrEqual(0);
+
+      render.unmount();
+
+      expect(grid._cellCache).toEqual({});
+      expect(grid._styleCache).toEqual({});
+      expect(grid._childrenToDisplay).toEqual([]);
+    });
+
     it('should not clear cache if :isScrollingOptOut is true', () => {
       const cellRendererCalls = [];
       function cellRenderer({columnIndex, key, rowIndex, style}) {
@@ -2452,7 +2508,7 @@ describe('Grid', () => {
         height: 100,
         rowHeight: 100,
         columnWidth: 100,
-        rowCount: getMaxElementSize() * 2 / 100, // lots of offset
+        rowCount: (getMaxElementSize() * 2) / 100, // lots of offset
         scrollTop: 2000,
       }),
     );

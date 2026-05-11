@@ -411,6 +411,10 @@ class Grid extends React.PureComponent<Props, State> {
     return this.state.instanceProps.columnSizeAndPositionManager.getTotalSize();
   }
 
+  getScrollableContainer() {
+    return this._scrollingContainer;
+  }
+
   /**
    * This method handles a scroll event originating from an external scroll control.
    * It's an advanced method and should probably not be used unless you're implementing a custom scroll-bar solution.
@@ -740,7 +744,7 @@ class Grid extends React.PureComponent<Props, State> {
     // So we should always recalculate offset afterwards.
     const sizeJustIncreasedFromZero =
       (prevProps.width === 0 || prevProps.height === 0) &&
-      (height > 0 && width > 0);
+      height > 0 && width > 0;
 
     // Update scroll offsets if the current :scrollToColumn or :scrollToRow values requires it
     // @TODO Do we also need this check or can the one in componentWillUpdate() suffice?
@@ -812,6 +816,10 @@ class Grid extends React.PureComponent<Props, State> {
     if (this._disablePointerEventsTimeoutId) {
       cancelAnimationTimeout(this._disablePointerEventsTimeoutId);
     }
+
+    this._cellCache = {};
+    this._styleCache = {};
+    this._childrenToDisplay = [];
   }
 
   /**
@@ -1227,6 +1235,15 @@ class Grid extends React.PureComponent<Props, State> {
         }
       }
 
+      if (isScrolling || isScrollingOptOut) {
+        this._pruneCellCache({
+          columnStartIndex,
+          columnStopIndex,
+          rowStartIndex,
+          rowStopIndex,
+        });
+      }
+
       this._childrenToDisplay = cellRangeRenderer({
         cellCache: this._cellCache,
         cellRenderer,
@@ -1566,6 +1583,50 @@ class Grid extends React.PureComponent<Props, State> {
     state: State = this.state,
   ) {
     return Grid._getCalculatedScrollTop(props, state);
+  }
+
+  _pruneCellCache({
+    columnStartIndex,
+    columnStopIndex,
+    rowStartIndex,
+    rowStopIndex,
+  }: {
+    columnStartIndex: number,
+    columnStopIndex: number,
+    rowStartIndex: number,
+    rowStopIndex: number,
+  }) {
+    const cellCache = this._cellCache;
+
+    if (
+      rowStartIndex > rowStopIndex ||
+      columnStartIndex > columnStopIndex ||
+      Object.keys(cellCache).length === 0
+    ) {
+      if (rowStartIndex > rowStopIndex || columnStartIndex > columnStopIndex) {
+        this._cellCache = {};
+      }
+
+      return;
+    }
+
+    const nextCellCache = {};
+
+    for (let rowIndex = rowStartIndex; rowIndex <= rowStopIndex; rowIndex++) {
+      for (
+        let columnIndex = columnStartIndex;
+        columnIndex <= columnStopIndex;
+        columnIndex++
+      ) {
+        const key = `${rowIndex}-${columnIndex}`;
+
+        if (cellCache[key] !== undefined) {
+          nextCellCache[key] = cellCache[key];
+        }
+      }
+    }
+
+    this._cellCache = nextCellCache;
   }
 
   _resetStyleCache() {

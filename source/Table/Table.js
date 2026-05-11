@@ -6,7 +6,6 @@ import clsx from 'clsx';
 import Column from './Column';
 import PropTypes from 'prop-types';
 import * as React from 'react';
-import {findDOMNode} from 'react-dom';
 import Grid, {accessibilityOverscanIndicesGetter} from '../Grid';
 
 import defaultRowRenderer from './defaultRowRenderer';
@@ -545,8 +544,8 @@ export default class Table extends React.PureComponent {
       const newSortDirection = isFirstTimeSort
         ? defaultSortDirection
         : sortDirection === SortDirection.DESC
-          ? SortDirection.ASC
-          : SortDirection.DESC;
+        ? SortDirection.ASC
+        : SortDirection.DESC;
 
       const onClick = event => {
         sortEnabled &&
@@ -661,9 +660,7 @@ export default class Table extends React.PureComponent {
    * Determines the flex-shrink, flex-grow, and width values for a cell (header or column).
    */
   _getFlexStyleForColumn(column, customStyle = {}) {
-    const flexValue = `${column.props.flexGrow} ${column.props.flexShrink} ${
-      column.props.width
-    }px`;
+    const flexValue = `${column.props.flexGrow} ${column.props.flexShrink} ${column.props.width}px`;
 
     const style = {
       ...customStyle,
@@ -726,9 +723,14 @@ export default class Table extends React.PureComponent {
 
   _setScrollbarWidth() {
     if (this.Grid) {
-      const Grid = findDOMNode(this.Grid);
-      const clientWidth = Grid.clientWidth || 0;
-      const offsetWidth = Grid.offsetWidth || 0;
+      const grid = this.Grid.getScrollableContainer();
+
+      if (!grid) {
+        return;
+      }
+
+      const clientWidth = grid.clientWidth || 0;
+      const offsetWidth = grid.offsetWidth || 0;
       const scrollbarWidth = offsetWidth - clientWidth;
 
       this.setState({scrollbarWidth});
