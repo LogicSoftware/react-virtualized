@@ -28,38 +28,32 @@ The simple way to fix this is to nest `AutoSizer` inside of a `block` element (l
 Read more about common `AutoSizer` questions [here](usingAutoSizer.md).
 
 ```javascript
-import React from 'react';
-import ReactDOM from 'react-dom';
-import {AutoSizer, List} from 'react-virtualized';
-import 'react-virtualized/styles.css'; // only needs to be imported once
+import React from "react";
+import ReactDOM from "react-dom";
+import { AutoSizer, List } from "react-virtualized";
+import "react-virtualized/styles.css"; // only needs to be imported once
 
 // List data as an array of strings
 const list = [
-  'Brian Vaughn',
-  // And so on...
+    "Brian Vaughn",
+    // And so on...
 ];
 
-function rowRenderer({key, index, style}) {
-  return (
-    <div key={key} style={style}>
-      {list[index]}
-    </div>
-  );
+function rowRenderer({ key, index, style }) {
+    return (
+        <div key={key} style={style}>
+            {list[index]}
+        </div>
+    );
 }
 
 // Render your list
 ReactDOM.render(
-  <AutoSizer>
-    {({height, width}) => (
-      <List
-        height={height}
-        rowCount={list.length}
-        rowHeight={20}
-        rowRenderer={rowRenderer}
-        width={width}
-      />
-    )}
-  </AutoSizer>,
-  document.getElementById('example'),
+    <AutoSizer>
+        {({ height, width }) => (
+            <List height={height} rowCount={list.length} rowHeight={20} rowRenderer={rowRenderer} width={width} />
+        )}
+    </AutoSizer>,
+    document.getElementById("example"),
 );
 ```

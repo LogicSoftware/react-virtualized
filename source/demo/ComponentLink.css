@@ -1,25 +1,25 @@
 .ComponentLink {
-  display: list-item;
-  background: none;
-  border: none;
-  padding: .6rem;
-  color: #bdbdbd;
-  cursor: pointer;
-  text-transform: uppercase;
-  text-decoration: none;
-  transition: .2s all;
+    display: list-item;
+    background: none;
+    border: none;
+    padding: 0.6rem;
+    color: #bdbdbd;
+    cursor: pointer;
+    text-transform: uppercase;
+    text-decoration: none;
+    transition: 0.2s all;
 }
 .ComponentLink:hover {
-  color: #fff;
+    color: #fff;
 }
 .ComponentLink:focus {
-  outline: none;
-  background: rgba(255,255,255,.08);
+    outline: none;
+    background: rgba(255, 255, 255, 0.08);
 }
 .ActiveComponentLink {
-  color: #fff;
+    color: #fff;
 }
 .DisabledComponentLink {
-  pointer-events: none;
-  opacity: 0.5;
+    pointer-events: none;
+    opacity: 0.5;
 }

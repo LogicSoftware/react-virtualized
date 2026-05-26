@@ -23,9 +23,7 @@ One easy way to test this is to add a style property (eg `background-color: red;
 You can use `AutoSizer` to control only one dimension of its child component using the `disableHeight` or `disableWidth` attributes. For example, a fixed-height component that should grow to fill the available width can be created like so:
 
 ```jsx
-<AutoSizer disableHeight>
-  {({width}) => <Component height={200} width={width} {...props} />}
-</AutoSizer>
+<AutoSizer disableHeight>{({ width }) => <Component height={200} width={width} {...props} />}</AutoSizer>
 ```
 
 #### Can I use AutoSizer within a flex container?
@@ -55,19 +53,19 @@ When using an `AutoSizer` as a direct child of a flex box it usually works out b
 
 ```jsx
 <InfiniteLoader {...infiniteLoaderProps}>
-  {({onRowsRendered, registerChild}) => (
-    <AutoSizer>
-      {({height, width}) => (
-        <List
-          ref={registerChild}
-          width={width}
-          height={height}
-          onRowsRendered={onRowsRendered}
-          {...listProps}
-        />
-      )}
-    </AutoSizer>
-  )}
+    {({ onRowsRendered, registerChild }) => (
+        <AutoSizer>
+            {({ height, width }) => (
+                <List
+                    ref={registerChild}
+                    width={width}
+                    height={height}
+                    onRowsRendered={onRowsRendered}
+                    {...listProps}
+                />
+            )}
+        </AutoSizer>
+    )}
 </InfiniteLoader>
 ```
 

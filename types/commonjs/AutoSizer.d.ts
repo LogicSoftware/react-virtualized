@@ -1,1 +1,1 @@
-export * from '../es/AutoSizer';
+export * from "../es/AutoSizer";

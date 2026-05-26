@@ -103,10 +103,10 @@
 - Add `getTotalRowsHeight` and `getTotalColumnsWidth` to `Grid`. ([nihgwu](https://github.com/nihgwu) - [#1022](https://github.com/bvaughn/react-virtualized/pull/1022))
 - Allow top-right and bottom-left scrollbars in `MultiGrid` be hidden. ([RaviDasari](https://github.com/RaviDasari) - [#1040](https://github.com/bvaughn/react-virtualized/pull/1040))
 - Documentation changes
-  - Added `forceUpdateGrid` documentation for `MultiGrid`. ([kartikluke](https://github.com/kartikluke) - [#1079](https://github.com/bvaughn/react-virtualized/pull/1079))
-  - 🐛 Fixed typo in `Grid` docs. ([r-kot](https://github.com/r-kot) - [#1092](https://github.com/bvaughn/react-virtualized/pull/1092))
-  - 🐛 Fixed typo in `Collection` docs. ([skipjack](https://github.com/skipjack) - [#1050](https://github.com/bvaughn/react-virtualized/pull/1050))
-  - Added dynamically measured images example for `Masonry`. ([kirill-konshin](https://github.com/kirill-konshin) - [#1081](https://github.com/bvaughn/react-virtualized/pull/1081))
+    - Added `forceUpdateGrid` documentation for `MultiGrid`. ([kartikluke](https://github.com/kartikluke) - [#1079](https://github.com/bvaughn/react-virtualized/pull/1079))
+    - 🐛 Fixed typo in `Grid` docs. ([r-kot](https://github.com/r-kot) - [#1092](https://github.com/bvaughn/react-virtualized/pull/1092))
+    - 🐛 Fixed typo in `Collection` docs. ([skipjack](https://github.com/skipjack) - [#1050](https://github.com/bvaughn/react-virtualized/pull/1050))
+    - Added dynamically measured images example for `Masonry`. ([kirill-konshin](https://github.com/kirill-konshin) - [#1081](https://github.com/bvaughn/react-virtualized/pull/1081))
 
 ##### 9.18.5
 
@@ -573,12 +573,9 @@ Note that if you intend to use the UMD build of `react-lite` the following lines
 
 ```js
 React.addons = {
-  shallowCompare(context, nextProps, nextState) {
-    return React.PureComponent.prototype.shouldComponentUpdate(
-      nextProps,
-      nextState,
-    );
-  },
+    shallowCompare(context, nextProps, nextState) {
+        return React.PureComponent.prototype.shouldComponentUpdate(nextProps, nextState);
+    },
 };
 ReactDOM = React;
 ```
@@ -1053,9 +1050,9 @@ At a high-level the purpose of this release is to improve customization and flex
 ```
 
 - The following public methods have also be removed from components:
-  - `FlexTable`: `scrollToRow` (use `scrollToIndex` prop instead), `setScrollTop` (use `scrollTop` prop instead)
-  - `Grid`: `scrollToCell` (use `scrollToColumn` and `scrollToRow` props instead), `setScrollPosition` (use `scrollLeft` and `scrollTop` props instead)
-  - `VirtualScroll`: `scrollToRow` (use `scrollToIndex` prop instead), `setScrollTop` (use `scrollTop` prop instead)
+    - `FlexTable`: `scrollToRow` (use `scrollToIndex` prop instead), `setScrollTop` (use `scrollTop` prop instead)
+    - `Grid`: `scrollToCell` (use `scrollToColumn` and `scrollToRow` props instead), `setScrollPosition` (use `scrollLeft` and `scrollTop` props instead)
+    - `VirtualScroll`: `scrollToRow` (use `scrollToIndex` prop instead), `setScrollTop` (use `scrollTop` prop instead)
 
 ### Backwards-compatible changes
 
@@ -1296,7 +1293,7 @@ Removed an unused dependency on 'inline-style-prefixer' from the `package.json`.
 CSS styles have been split into their own, separately loaded stylesheet. This simplifies universal/isomorphic use cases without breaking vendor prefixing. This change means that you'll need to import the following additional file. This only needs to be done once (usually during bootstrapping).
 
 ```js
-import 'react-virtualized/styles.css';
+import "react-virtualized/styles.css";
 ```
 
 In this release the `width` property of the `FlexTable` component was removed. Tables will now grow to fill 100% of the width of their parent container.
@@ -1311,7 +1308,7 @@ Should instead be this:
 
 ```jsx
 <AutoSizer>
-  <VirtualScroll {...props} />
+    <VirtualScroll {...props} />
 </AutoSizer>
 ```
 

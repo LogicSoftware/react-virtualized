@@ -68,52 +68,41 @@ This example shows a `Grid` with fixed row heights and dynamic column widths.
 For more examples check out the component [demo page](https://bvaughn.github.io/react-virtualized/#/components/CellMeasurer).
 
 ```jsx
-import React from 'react';
-import { CellMeasurer, CellMeasurerCache, Grid } from 'react-virtualized';
+import React from "react";
+import { CellMeasurer, CellMeasurerCache, Grid } from "react-virtualized";
 
 // In this example, average cell width is assumed to be about 100px.
 // This value will be used for the initial `Grid` layout.
 // Cell measurements smaller than 75px should also be rounded up.
 // Height is not dynamic.
 const cache = new CellMeasurerCache({
-  defaultWidth: 100,
-  minWidth: 75,
-  fixedHeight: true
+    defaultWidth: 100,
+    minWidth: 75,
+    fixedHeight: true,
 });
 
-function cellRenderer ({ columnIndex, key, parent, rowIndex, style }) {
-  const content // Derive this from your data somehow
+function cellRenderer({ columnIndex, key, parent, rowIndex, style }) {
+    const content; // Derive this from your data somehow
 
-  return (
-    <CellMeasurer
-      cache={cache}
-      columnIndex={columnIndex}
-      key={key}
-      parent={parent}
-      rowIndex={rowIndex}
-    >
-      <div
-        style={{
-          ...style,
-          height: 35,
-          whiteSpace: 'nowrap'
-        }}
-      >
-        {content}
-      </div>
-    </CellMeasurer>
-  );
+    return (
+        <CellMeasurer cache={cache} columnIndex={columnIndex} key={key} parent={parent} rowIndex={rowIndex}>
+            <div
+                style={{
+                    ...style,
+                    height: 35,
+                    whiteSpace: "nowrap",
+                }}
+            >
+                {content}
+            </div>
+        </CellMeasurer>
+    );
 }
 
-function renderGrid (props) {
-  return (
-    <Grid
-      {...props}
-      columnWidth={cache.columnWidth}
-      deferredMeasurementCache={cache}
-      cellRenderer={cellRenderer}
-    />
-  );
+function renderGrid(props) {
+    return (
+        <Grid {...props} columnWidth={cache.columnWidth} deferredMeasurementCache={cache} cellRenderer={cellRenderer} />
+    );
 }
 ```
 
@@ -124,54 +113,43 @@ This API is [deprecated in React `StrictMode`](https://reactjs.org/docs/strict-m
 As an alternative, you can use `registerChild` render prop to specify the element, e.g. by passing as a `ref`.
 
 ```jsx
-import React from 'react';
-import { CellMeasurer, CellMeasurerCache, Grid } from 'react-virtualized';
+import React from "react";
+import { CellMeasurer, CellMeasurerCache, Grid } from "react-virtualized";
 
 // In this example, average cell width is assumed to be about 100px.
 // This value will be used for the initial `Grid` layout.
 // Cell measurements smaller than 75px should also be rounded up.
 // Height is not dynamic.
 const cache = new CellMeasurerCache({
-  defaultWidth: 100,
-  minWidth: 75,
-  fixedHeight: true
+    defaultWidth: 100,
+    minWidth: 75,
+    fixedHeight: true,
 });
 
-function cellRenderer ({ columnIndex, key, parent, rowIndex, style }) {
-  const content // Derive this from your data somehow
+function cellRenderer({ columnIndex, key, parent, rowIndex, style }) {
+    const content; // Derive this from your data somehow
 
-  return (
-    <CellMeasurer
-      cache={cache}
-      columnIndex={columnIndex}
-      key={key}
-      parent={parent}
-      rowIndex={rowIndex}
-    >
-      {({registerChild}) => (
-        <div
-          style={{
-            ...style,
-            height: 35,
-            whiteSpace: 'nowrap'
-          }}
-        >
-          {content}
-        </div>
-      )}
-    </CellMeasurer>
-  );
+    return (
+        <CellMeasurer cache={cache} columnIndex={columnIndex} key={key} parent={parent} rowIndex={rowIndex}>
+            {({ registerChild }) => (
+                <div
+                    style={{
+                        ...style,
+                        height: 35,
+                        whiteSpace: "nowrap",
+                    }}
+                >
+                    {content}
+                </div>
+            )}
+        </CellMeasurer>
+    );
 }
 
-function renderGrid (props) {
-  return (
-    <Grid
-      {...props}
-      columnWidth={cache.columnWidth}
-      deferredMeasurementCache={cache}
-      cellRenderer={cellRenderer}
-    />
-  );
+function renderGrid(props) {
+    return (
+        <Grid {...props} columnWidth={cache.columnWidth} deferredMeasurementCache={cache} cellRenderer={cellRenderer} />
+    );
 }
 ```
 
@@ -183,50 +161,34 @@ To support this, a function-child is passed to `CellMeasurer` which then receive
 `measure` should be called when cell content is ready to be measured (in this case, when the image has loaded).
 
 ```jsx
-import React from 'react';
-import { CellMeasurer, CellMeasurerCache, List } from 'react-virtualized';
+import React from "react";
+import { CellMeasurer, CellMeasurerCache, List } from "react-virtualized";
 
 // In this example, average cell height is assumed to be about 50px.
 // This value will be used for the initial `Grid` layout.
 // Width is not dynamic.
 const cache = new CellMeasurerCache({
-  defaultHeight: 50,
-  fixedWidth: true
+    defaultHeight: 50,
+    fixedWidth: true,
 });
 
-function rowRenderer ({ index, isScrolling, key, parent, style }) {
-  const source // This comes from your list data
+function rowRenderer({ index, isScrolling, key, parent, style }) {
+    const source; // This comes from your list data
 
-  return (
-    <CellMeasurer
-      cache={cache}
-      columnIndex={0}
-      key={key}
-      parent={parent}
-      rowIndex={index}
-    >
-      {({ measure, registerChild }) => (
-        // 'style' attribute required to position cell (within parent List)
-        <div ref={registerChild} style={style}>
-          <img
-            onLoad={measure}
-            src={source}
-          />
-        </div>
-      )}
-    </CellMeasurer>
-  );
+    return (
+        <CellMeasurer cache={cache} columnIndex={0} key={key} parent={parent} rowIndex={index}>
+            {({ measure, registerChild }) => (
+                // 'style' attribute required to position cell (within parent List)
+                <div ref={registerChild} style={style}>
+                    <img onLoad={measure} src={source} />
+                </div>
+            )}
+        </CellMeasurer>
+    );
 }
 
-function renderList (props) {
-  return (
-    <List
-      {...props}
-      deferredMeasurementCache={cache}
-      rowHeight={cache.rowHeight}
-      rowRenderer={rowRenderer}
-    />
-  );
+function renderList(props) {
+    return <List {...props} deferredMeasurementCache={cache} rowHeight={cache.rowHeight} rowRenderer={rowRenderer} />;
 }
 ```
 
@@ -238,9 +200,9 @@ function renderList (props) {
 // tell CellMeasurer that all measurements after the first one will hit the
 // cache and we get a speedy solution.
 const cache = new CellMeasurerCache({
-  defaultHeight: 30,
-  fixedWidth: true,
-  keyMapper: () => 1,
+    defaultHeight: 30,
+    fixedWidth: true,
+    keyMapper: () => 1,
 });
 ```
 

@@ -128,18 +128,18 @@ It is useful for situations where you require additional hooks into `Table` (eg 
 If you do override `rowRenderer` the easiest way is to decorate the default implementation like so:
 
 ```jsx
-import {SortableContainer, SortableElement} from 'react-sortable-hoc';
-import {defaultTableRowRenderer, Table} from 'react-virtualized';
+import { SortableContainer, SortableElement } from "react-sortable-hoc";
+import { defaultTableRowRenderer, Table } from "react-virtualized";
 
 const SortableTable = SortableContainer(Table);
 const SortableTableRowRenderer = SortableElement(defaultTableRowRenderer);
 
 function rowRenderer(props) {
-  return <SortableTableRowRenderer {...props} />;
+    return <SortableTableRowRenderer {...props} />;
 }
 
 function CustomizedTable(props) {
-  return <SortableTable rowRenderer={rowRenderer} {...props} />;
+    return <SortableTable rowRenderer={rowRenderer} {...props} />;
 }
 ```
 
@@ -166,29 +166,30 @@ This function accepts the following named parameters:
 Below is a very basic `Table` example. This table has only 2 columns, each containing a simple string. Both have a fixed width and neither is sortable. [See here](../source/Table/Table.example.js) for a more full-featured example including custom cell renderers, sortable headers, and more.
 
 ```javascript
-import React from 'react';
-import ReactDOM from 'react-dom';
-import {Column, Table} from 'react-virtualized';
-import 'react-virtualized/styles.css'; // only needs to be imported once
+import React from "react";
+import ReactDOM from "react-dom";
+import { Column, Table } from "react-virtualized";
+import "react-virtualized/styles.css"; // only needs to be imported once
 
 // Table data as an array of objects
 const list = [
-  {name: 'Brian Vaughn', description: 'Software engineer'},
-  // And so on...
+    { name: "Brian Vaughn", description: "Software engineer" },
+    // And so on...
 ];
 
 // Render your table
 ReactDOM.render(
-  <Table
-    width={300}
-    height={300}
-    headerHeight={20}
-    rowHeight={30}
-    rowCount={list.length}
-    rowGetter={({index}) => list[index]}>
-    <Column label="Name" dataKey="name" width={100} />
-    <Column width={200} label="Description" dataKey="description" />
-  </Table>,
-  document.getElementById('example'),
+    <Table
+        width={300}
+        height={300}
+        headerHeight={20}
+        rowHeight={30}
+        rowCount={list.length}
+        rowGetter={({ index }) => list[index]}
+    >
+        <Column label="Name" dataKey="name" width={100} />
+        <Column width={200} label="Description" dataKey="description" />
+    </Table>,
+    document.getElementById("example"),
 );
 ```

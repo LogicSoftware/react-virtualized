@@ -96,16 +96,16 @@ For example:
 // The Table component ships with a few presentational styles as well.
 // They are optional, but if you want them you will need to also import the CSS file.
 // This only needs to be done once; probably during your application's bootstrapping process.
-import 'react-virtualized/styles.css';
+import "react-virtualized/styles.css";
 
 // You can import any component you want as a named export from 'react-virtualized', eg
-import {Column, Table} from 'react-virtualized';
+import { Column, Table } from "react-virtualized";
 
 // But if you only use a few react-virtualized components,
 // And you're concerned about increasing your application's bundle size,
 // You can directly import only the components you need, like so:
-import AutoSizer from 'react-virtualized/dist/commonjs/AutoSizer';
-import List from 'react-virtualized/dist/commonjs/List';
+import AutoSizer from "react-virtualized/dist/commonjs/AutoSizer";
+import List from "react-virtualized/dist/commonjs/List";
 ```
 
 Note webpack 4 makes this optimization itself, see the [documentation](https://webpack.js.org/guides/tree-shaking/#mark-the-file-as-side-effect-free).
@@ -125,7 +125,7 @@ If the above syntax looks too cumbersome, or you import react-virtualized compon
 Then you can just import like so:
 
 ```js
-import List from 'react-virtualized/List';
+import List from "react-virtualized/List";
 
 // Now you can use <List {...props} />
 ```

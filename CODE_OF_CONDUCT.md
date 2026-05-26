@@ -70,8 +70,8 @@ Once the maintainers get involved, they will follow a documented series of steps
 If you experience or witness unacceptable behavior—or have any other concerns—please report it by contacting us via the following methods:
 
 - Through email:
-  - [brian.david.vaughn@gmail.com](mailto:brian.david.vaughn@gmail.com) (Brian Vaughn)
-  - [me@weiweiwu.me](mailto:me@weiweiwu.me) (Wei-Wei Wu)
+    - [brian.david.vaughn@gmail.com](mailto:brian.david.vaughn@gmail.com) (Brian Vaughn)
+    - [me@weiweiwu.me](mailto:me@weiweiwu.me) (Wei-Wei Wu)
 
 All reports will be handled with discretion. In your report please include:
 

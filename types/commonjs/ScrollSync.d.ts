@@ -1,1 +1,1 @@
-export * from '../es/ScrollSync';
+export * from "../es/ScrollSync";

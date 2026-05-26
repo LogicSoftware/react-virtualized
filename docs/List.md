@@ -75,34 +75,34 @@ This function accepts the following named parameters:
 
 ```jsx
 function rowRenderer({
-  index, // Index of row
-  isScrolling, // The List is currently being scrolled
-  isVisible, // This row is visible within the List (eg it is not an overscanned row)
-  key, // Unique key within array of rendered rows
-  parent, // Reference to the parent List (instance)
-  style, // Style object to be applied to row (to position it);
-  // This must be passed through to the rendered row element.
+    index, // Index of row
+    isScrolling, // The List is currently being scrolled
+    isVisible, // This row is visible within the List (eg it is not an overscanned row)
+    key, // Unique key within array of rendered rows
+    parent, // Reference to the parent List (instance)
+    style, // Style object to be applied to row (to position it);
+    // This must be passed through to the rendered row element.
 }) {
-  const user = list[index];
+    const user = list[index];
 
-  // If row content is complex, consider rendering a light-weight placeholder while scrolling.
-  const content = isScrolling ? '...' : <User user={user} />;
+    // If row content is complex, consider rendering a light-weight placeholder while scrolling.
+    const content = isScrolling ? "..." : <User user={user} />;
 
-  // Style is required since it specifies how the row is to be sized and positioned.
-  // React Virtualized depends on this sizing/positioning for proper scrolling behavior.
-  // By default, the List component provides following style properties:
-  //    position
-  //    left
-  //    top
-  //    height
-  //    width
-  // You can add additional class names or style properties as you would like.
-  // Key is also required by React to more efficiently manage the array of rows.
-  return (
-    <div key={key} style={style}>
-      {content}
-    </div>
-  );
+    // Style is required since it specifies how the row is to be sized and positioned.
+    // React Virtualized depends on this sizing/positioning for proper scrolling behavior.
+    // By default, the List component provides following style properties:
+    //    position
+    //    left
+    //    top
+    //    height
+    //    width
+    // You can add additional class names or style properties as you would like.
+    // Key is also required by React to more efficiently manage the array of rows.
+    return (
+        <div key={key} style={style}>
+            {content}
+        </div>
+    );
 }
 ```
 
@@ -123,39 +123,33 @@ It would make scrolling the list difficult (as individual items will intercept t
 For this reason it is recommended that your rows use a style like `overflow-y: hidden`.)
 
 ```javascript
-import React from 'react';
-import ReactDOM from 'react-dom';
-import {List} from 'react-virtualized';
+import React from "react";
+import ReactDOM from "react-dom";
+import { List } from "react-virtualized";
 
 // List data as an array of strings
 const list = [
-  'Brian Vaughn',
-  // And so on...
+    "Brian Vaughn",
+    // And so on...
 ];
 
 function rowRenderer({
-  key, // Unique key within array of rows
-  index, // Index of row within collection
-  isScrolling, // The List is currently being scrolled
-  isVisible, // This row is visible within the List (eg it is not an overscanned row)
-  style, // Style object to be applied to row (to position it)
+    key, // Unique key within array of rows
+    index, // Index of row within collection
+    isScrolling, // The List is currently being scrolled
+    isVisible, // This row is visible within the List (eg it is not an overscanned row)
+    style, // Style object to be applied to row (to position it)
 }) {
-  return (
-    <div key={key} style={style}>
-      {list[index]}
-    </div>
-  );
+    return (
+        <div key={key} style={style}>
+            {list[index]}
+        </div>
+    );
 }
 
 // Render your list
 ReactDOM.render(
-  <List
-    width={300}
-    height={300}
-    rowCount={list.length}
-    rowHeight={20}
-    rowRenderer={rowRenderer}
-  />,
-  document.getElementById('example'),
+    <List width={300} height={300} rowCount={list.length} rowHeight={20} rowRenderer={rowRenderer} />,
+    document.getElementById("example"),
 );
 ```

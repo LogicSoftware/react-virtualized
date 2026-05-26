@@ -27,33 +27,29 @@ The child function is passed the following named parameters:
 This example displays a `Grid` that shrinks to fit sparse content (using the `adjustedWidth` parameter). An interactive demo of this component can be seen [here](https://bvaughn.github.io/react-virtualized/#/components/ColumnSizer).
 
 ```javascript
-import React from 'react';
-import ReactDOM from 'react-dom';
-import {ColumnSizer, Grid} from 'react-virtualized';
-import 'react-virtualized/styles.css'; // only needs to be imported once
+import React from "react";
+import ReactDOM from "react-dom";
+import { ColumnSizer, Grid } from "react-virtualized";
+import "react-virtualized/styles.css"; // only needs to be imported once
 
 // numColumns, numRows, someCalculatedHeight, and someCalculatedWidth determined here...
 
 // Render your list
 ReactDOM.render(
-  <ColumnSizer
-    columnMaxWidth={100}
-    columnMinWidth={50}
-    columnCount={numColumns}
-    width={someCalculatedWidth}>
-    {({adjustedWidth, getColumnWidth, registerChild}) => (
-      <Grid
-        ref={registerChild}
-        columnWidth={getColumnWidth}
-        columnCount={numColumns}
-        height={someCalculatedHeight}
-        cellRenderer={someCellRenderer}
-        rowHeight={50}
-        rowCount={numRows}
-        width={adjustedWidth}
-      />
-    )}
-  </ColumnSizer>,
-  document.getElementById('example'),
+    <ColumnSizer columnMaxWidth={100} columnMinWidth={50} columnCount={numColumns} width={someCalculatedWidth}>
+        {({ adjustedWidth, getColumnWidth, registerChild }) => (
+            <Grid
+                ref={registerChild}
+                columnWidth={getColumnWidth}
+                columnCount={numColumns}
+                height={someCalculatedHeight}
+                cellRenderer={someCellRenderer}
+                rowHeight={50}
+                rowCount={numRows}
+                width={adjustedWidth}
+            />
+        )}
+    </ColumnSizer>,
+    document.getElementById("example"),
 );
 ```

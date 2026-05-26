@@ -6,61 +6,61 @@ Here is a high level template for doing this:
 
 ```jsx
 export default class Example extends Component {
-  constructor(props) {
-    super(props);
+    constructor(props) {
+        super(props);
 
-    this.state = {
-      list: [],
-    };
-  }
+        this.state = {
+            list: [],
+        };
+    }
 
-  componentDidMount() {
-    this._interval = setInterval(::this._updateFeed, 500);
-  }
+    componentDidMount() {
+        this._interval = setInterval(::this._updateFeed, 500);
+    }
 
-  componentWillUnmount() {
-    clearInterval(this._interval);
-  }
+    componentWillUnmount() {
+        clearInterval(this._interval);
+    }
 
-  render() {
-    const {list} = this.state;
+    render() {
+        const { list } = this.state;
 
-    return (
-      <div className={styles.ListExample}>
-        <List
-          ref="List"
-          className={styles.List}
-          width={300}
-          height={200}
-          rowHeight={60}
-          rowCount={list.length}
-          rowRenderer={::this._rowRenderer}
-        />
-      </div>
-    );
-  }
+        return (
+            <div className={styles.ListExample}>
+                <List
+                    ref="List"
+                    className={styles.List}
+                    width={300}
+                    height={200}
+                    rowHeight={60}
+                    rowCount={list.length}
+                    rowRenderer={::this._rowRenderer}
+                />
+            </div>
+        );
+    }
 
-  _updateFeed() {
-    const list = [...this.state.list];
+    _updateFeed() {
+        const list = [...this.state.list];
 
-    list
-      .unshift
-      // Add new item here
-      ();
+        list
+            .unshift
+            // Add new item here
+            ();
 
-    this.setState({list});
+        this.setState({ list });
 
-    // If you want to scroll to the top you can do it like this
-    this.refs.List.scrollToRow(0);
-  }
+        // If you want to scroll to the top you can do it like this
+        this.refs.List.scrollToRow(0);
+    }
 
-  _rowRenderer({key, index}) {
-    return (
-      <div key={key} style={style}>
-        {/* Your content goes here */}
-      </div>
-    );
-  }
+    _rowRenderer({ key, index }) {
+        return (
+            <div key={key} style={style}>
+                {/* Your content goes here */}
+            </div>
+        );
+    }
 }
 ```
 

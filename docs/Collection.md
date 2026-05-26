@@ -54,45 +54,45 @@ Below is a very basic `Collection` example. It displays an array of objects with
 [See here](../source/Collection/Collection.example.js) for a more full-featured example.
 
 ```jsx
-import React from 'react';
-import ReactDOM from 'react-dom';
-import {Collection} from 'react-virtualized';
-import 'react-virtualized/styles.css'; // only needs to be imported once
+import React from "react";
+import ReactDOM from "react-dom";
+import { Collection } from "react-virtualized";
+import "react-virtualized/styles.css"; // only needs to be imported once
 
 // Collection data as an array of objects
 const list = [
-  {name: 'Brian Vaughn', x: 13, y: 34, width: 123, height: 234},
-  // And so on...
+    { name: "Brian Vaughn", x: 13, y: 34, width: 123, height: 234 },
+    // And so on...
 ];
 
-function cellRenderer({index, key, style}) {
-  return (
-    <div key={key} style={style}>
-      {list[index].name}
-    </div>
-  );
+function cellRenderer({ index, key, style }) {
+    return (
+        <div key={key} style={style}>
+            {list[index].name}
+        </div>
+    );
 }
 
-function cellSizeAndPositionGetter({index}) {
-  const datum = list[index];
+function cellSizeAndPositionGetter({ index }) {
+    const datum = list[index];
 
-  return {
-    height: datum.height,
-    width: datum.width,
-    x: datum.x,
-    y: datum.y,
-  };
+    return {
+        height: datum.height,
+        width: datum.width,
+        x: datum.x,
+        y: datum.y,
+    };
 }
 
 // Render your grid
 ReactDOM.render(
-  <Collection
-    cellCount={list.length}
-    cellRenderer={cellRenderer}
-    cellSizeAndPositionGetter={cellSizeAndPositionGetter}
-    height={300}
-    width={300}
-  />,
-  document.getElementById('example'),
+    <Collection
+        cellCount={list.length}
+        cellRenderer={cellRenderer}
+        cellSizeAndPositionGetter={cellSizeAndPositionGetter}
+        height={300}
+        width={300}
+    />,
+    document.getElementById("example"),
 );
 ```

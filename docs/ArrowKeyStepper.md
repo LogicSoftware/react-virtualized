@@ -42,24 +42,24 @@ The child function is passed the following named parameters:
 You can decorate any virtualized component (eg. `Table`, `Grid`, or `List`) with arrow-key snapping like so:
 
 ```javascript
-import React from 'react';
-import ReactDOM from 'react-dom';
-import {ArrowKeyStepper, Grid} from 'react-virtualized';
-import 'react-virtualized/styles.css'; // only needs to be imported once
+import React from "react";
+import ReactDOM from "react-dom";
+import { ArrowKeyStepper, Grid } from "react-virtualized";
+import "react-virtualized/styles.css"; // only needs to be imported once
 
 ReactDOM.render(
-  <ArrowKeyStepper columnCount={columnCount} rowCount={rowCount}>
-    {({onSectionRendered, scrollToColumn, scrollToRow}) => (
-      <Grid
-        columnCount={columnCount}
-        onSectionRendered={onSectionRendered}
-        rowCount={rowCount}
-        scrollToColumn={scrollToColumn}
-        scrollToRow={scrollToRow}
-        {...otherGridProps}
-      />
-    )}
-  </ArrowKeyStepper>,
-  document.getElementById('example'),
+    <ArrowKeyStepper columnCount={columnCount} rowCount={rowCount}>
+        {({ onSectionRendered, scrollToColumn, scrollToRow }) => (
+            <Grid
+                columnCount={columnCount}
+                onSectionRendered={onSectionRendered}
+                rowCount={rowCount}
+                scrollToColumn={scrollToColumn}
+                scrollToRow={scrollToRow}
+                {...otherGridProps}
+            />
+        )}
+    </ArrowKeyStepper>,
+    document.getElementById("example"),
 );
 ```
