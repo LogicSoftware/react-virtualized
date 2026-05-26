@@ -1,11 +1,12 @@
 {
-  "name": "react-virtualized",
+  "name": "@logicsoftware/react-virtualized",
   "description": "React components for efficiently rendering large, scrollable lists and tabular data",
   "author": "Brian Vaughn <brian.david.vaughn@gmail.com>",
   "user": "bvaughn",
-  "version": "9.22.6",
+  "version": "9.25.1",
   "homepage": "https://github.com/bvaughn/react-virtualized",
   "main": "dist/commonjs/index.js",
+  "types": "index.d.ts",
   "module": "dist/es/index.js",
   "jsnext:main": "dist/es/index.js",
   "license": "MIT",
@@ -43,11 +44,13 @@
   },
   "files": [
     "dist",
-    "styles.css"
+    "types",
+    "styles.css",
+    "index.d.ts"
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/bvaughn/react-virtualized.git"
+    "url": "git@github.com:LogicSoftware/react-virtualized.git"
   },
   "keywords": [
     "react",
