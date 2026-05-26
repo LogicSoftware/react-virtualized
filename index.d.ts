@@ -12,162 +12,149 @@
 // TypeScript Version: 2.8
 
 export {
-  ArrowKeyStepper,
-  ArrowKeyStepperProps,
-  ChildProps as ArrowKeyStepperChildProps,
-  ScrollIndices,
-} from './types/es/ArrowKeyStepper';
+    ArrowKeyStepper,
+    ArrowKeyStepperProps,
+    ChildProps as ArrowKeyStepperChildProps,
+    ScrollIndices
+} from "./types/es/ArrowKeyStepper";
+export { AutoSizer, AutoSizerProps, Dimensions, Size } from "./types/es/AutoSizer";
 export {
-  AutoSizer,
-  AutoSizerProps,
-  Dimensions,
-  Size,
-} from './types/es/AutoSizer';
+    CellMeasurer,
+    CellMeasurerCache,
+    CellMeasurerCacheParams,
+    CellMeasurerProps,
+    KeyMapper
+} from "./types/es/CellMeasurer";
 export {
-  CellMeasurer,
-  CellMeasurerCache,
-  CellMeasurerCacheParams,
-  CellMeasurerProps,
-  KeyMapper,
-} from './types/es/CellMeasurer';
+    Collection,
+    CollectionCellGroupRenderer,
+    CollectionCellGroupRendererParams,
+    CollectionCellRenderer,
+    CollectionCellRendererParams,
+    CollectionCellSizeAndPosition,
+    CollectionCellSizeAndPositionGetter,
+    CollectionProps
+} from "./types/es/Collection";
+export { ColumnSizer, ColumnSizerProps, SizedColumnProps } from "./types/es/ColumnSizer";
 export {
-  Collection,
-  CollectionCellGroupRenderer,
-  CollectionCellGroupRendererParams,
-  CollectionCellRenderer,
-  CollectionCellRendererParams,
-  CollectionCellSizeAndPosition,
-  CollectionCellSizeAndPositionGetter,
-  CollectionProps,
-} from './types/es/Collection';
+    accessibilityOverscanIndicesGetter,
+    defaultOverscanIndicesGetter,
+    defaultCellRangeRenderer,
+    Grid,
+    CellSizeAndPositionManager,
+    ConfigureParams,
+    ContainerSizeAndOffset,
+    GetVisibleCellRangeParams,
+    GridCellProps,
+    GridCellRangeProps,
+    GridCellRangeRenderer,
+    GridCellRenderer,
+    GridProps,
+    GridState,
+    OverscanIndices,
+    OverscanIndicesGetterParams,
+    ScrollDirection,
+    ScrollParams,
+    SectionRenderedParams,
+    SizeAndPositionData,
+    VisibleCellRange,
+    ScrollbarPresenceParams
+} from "./types/es/Grid";
+export { InfiniteLoader, InfiniteLoaderChildProps, InfiniteLoaderProps } from "./types/es/InfiniteLoader";
+export { List, ListProps, ListRowProps, ListRowRenderer } from "./types/es/List";
 export {
-  ColumnSizer,
-  ColumnSizerProps,
-  SizedColumnProps,
-} from './types/es/ColumnSizer';
+    createCellPositioner as createMasonryCellPositioner,
+    Masonry,
+    CellRenderer,
+    MasonryCellProps,
+    MasonryProps,
+    MasonryState,
+    OnCellsRenderedCallback,
+    OnScrollCallback,
+    Position,
+    Positioner
+} from "./types/es/Masonry";
+export { MultiGrid, MultiGridProps, MultiGridState } from "./types/es/MultiGrid";
 export {
-  accessibilityOverscanIndicesGetter,
-  defaultOverscanIndicesGetter,
-  defaultCellRangeRenderer,
-  Grid,
-  CellSizeAndPositionManager,
-  ConfigureParams,
-  ContainerSizeAndOffset,
-  GetVisibleCellRangeParams,
-  GridCellProps,
-  GridCellRangeProps,
-  GridCellRangeRenderer,
-  GridCellRenderer,
-  GridProps,
-  GridState,
-  OverscanIndices,
-  OverscanIndicesGetterParams,
-  ScrollDirection,
-  ScrollParams,
-  SectionRenderedParams,
-  SizeAndPositionData,
-  VisibleCellRange,
-  ScrollbarPresenceParams,
-} from './types/es/Grid';
+    ScrollSync,
+    OnScrollParams,
+    ScrollSyncChildProps,
+    ScrollSyncProps,
+    ScrollSyncState
+} from "./types/es/ScrollSync";
 export {
-  InfiniteLoader,
-  InfiniteLoaderChildProps,
-  InfiniteLoaderProps,
-} from './types/es/InfiniteLoader';
-export {List, ListProps, ListRowProps, ListRowRenderer} from './types/es/List';
+    createMultiSort as createTableMultiSort,
+    defaultCellDataGetter as defaultTableCellDataGetter,
+    defaultCellRenderer as defaultTableCellRenderer,
+    defaultHeaderRenderer as defaultTableHeaderRenderer,
+    defaultHeaderRowRenderer as defaultTableHeaderRowRenderer,
+    defaultRowRenderer as defaultTableRowRenderer,
+    Table,
+    Column,
+    SortDirection,
+    SortIndicator,
+    ColumnProps,
+    HeaderMouseEventHandlerParams,
+    RowMouseEventHandlerParams,
+    SortDirectionType,
+    TableCellDataGetter,
+    TableCellDataGetterParams,
+    TableCellProps,
+    TableCellRenderer,
+    TableHeaderProps,
+    TableHeaderRenderer,
+    TableHeaderRowProps,
+    TableHeaderRowRenderer,
+    TableProps,
+    TableRowProps,
+    TableRowRenderer,
+    SortParams
+} from "./types/es/Table";
 export {
-  createCellPositioner as createMasonryCellPositioner,
-  Masonry,
-  CellRenderer,
-  MasonryCellProps,
-  MasonryProps,
-  MasonryState,
-  OnCellsRenderedCallback,
-  OnScrollCallback,
-  Position,
-  Positioner,
-} from './types/es/Masonry';
-export {MultiGrid, MultiGridProps, MultiGridState} from './types/es/MultiGrid';
-export {
-  ScrollSync,
-  OnScrollParams,
-  ScrollSyncChildProps,
-  ScrollSyncProps,
-  ScrollSyncState,
-} from './types/es/ScrollSync';
-export {
-  createMultiSort as createTableMultiSort,
-  defaultCellDataGetter as defaultTableCellDataGetter,
-  defaultCellRenderer as defaultTableCellRenderer,
-  defaultHeaderRenderer as defaultTableHeaderRenderer,
-  defaultHeaderRowRenderer as defaultTableHeaderRowRenderer,
-  defaultRowRenderer as defaultTableRowRenderer,
-  Table,
-  Column,
-  SortDirection,
-  SortIndicator,
-  ColumnProps,
-  HeaderMouseEventHandlerParams,
-  RowMouseEventHandlerParams,
-  SortDirectionType,
-  TableCellDataGetter,
-  TableCellDataGetterParams,
-  TableCellProps,
-  TableCellRenderer,
-  TableHeaderProps,
-  TableHeaderRenderer,
-  TableHeaderRowProps,
-  TableHeaderRowRenderer,
-  TableProps,
-  TableRowProps,
-  TableRowRenderer,
-  SortParams,
-} from './types/es/Table';
-export {
-  WindowScroller,
-  WindowScrollerChildProps,
-  WindowScrollerProps,
-  WindowScrollerState,
-  IS_SCROLLING_TIMEOUT,
-} from './types/es/WindowScroller';
+    WindowScroller,
+    WindowScrollerChildProps,
+    WindowScrollerProps,
+    WindowScrollerState,
+    IS_SCROLLING_TIMEOUT
+} from "./types/es/WindowScroller";
 
 export type Index = {
-  index: number;
+    index: number;
 };
 
 export type PositionInfo = {
-  x: number;
-  y: number;
+    x: number;
+    y: number;
 };
 
 export type ScrollPosition = {
-  scrollLeft: number;
-  scrollTop: number;
+    scrollLeft: number;
+    scrollTop: number;
 };
 
 export type SizeInfo = {
-  height: number;
-  width: number;
+    height: number;
+    width: number;
 };
 
 export type SizeAndPositionInfo = SizeInfo & PositionInfo;
 
-export type Map<T> = {[key: string]: T};
+export type Map<T> = { [key: string]: T };
 
-export type Alignment = 'auto' | 'end' | 'start' | 'center';
+export type Alignment = "auto" | "end" | "start" | "center";
 
 export type IndexRange = {
-  startIndex: number;
-  stopIndex: number;
+    startIndex: number;
+    stopIndex: number;
 };
 
 export type OverscanIndexRange = {
-  overscanStartIndex: number;
-  overscanStopIndex: number;
+    overscanStartIndex: number;
+    overscanStopIndex: number;
 };
 
 export type ScrollEventData = {
-  clientHeight: number;
-  scrollHeight: number;
-  scrollTop: number;
+    clientHeight: number;
+    scrollHeight: number;
+    scrollTop: number;
 };
