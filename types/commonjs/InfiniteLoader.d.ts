@@ -1,1 +1,1 @@
-export * from '../es/InfiniteLoader';
+export * from "../es/InfiniteLoader";

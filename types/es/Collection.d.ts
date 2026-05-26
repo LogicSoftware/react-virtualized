@@ -6,7 +6,7 @@ import {
     ScrollPosition,
     SectionRenderedParams,
     SizeInfo,
-    SizeAndPositionInfo
+    SizeAndPositionInfo,
 } from "../../index";
 
 export type CollectionCellSizeAndPosition = {
@@ -172,6 +172,6 @@ export class Collection extends PureComponent<CollectionProps> {
     cellRenderers(
         params: {
             isScrolling: boolean;
-        } & SizeInfo
+        } & SizeInfo,
     ): React.ReactNode[];
 }

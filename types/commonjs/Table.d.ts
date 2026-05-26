@@ -1,1 +1,1 @@
-export * from '../es/Table';
+export * from "../es/Table";

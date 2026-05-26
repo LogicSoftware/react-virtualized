@@ -1,1 +1,1 @@
-export * from '../es/MultiGrid';
+export * from "../es/MultiGrid";

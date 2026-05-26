@@ -1,1 +1,1 @@
-export * from '../es/ColumnSizer';
+export * from "../es/ColumnSizer";

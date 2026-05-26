@@ -3,7 +3,7 @@
 React virtual CSS styles are split into their own, separately loaded stylesheet in order to simplify universal/isomorphic usage while also enabling styles to be customized. This stylesheet should be imported somewhere (usually during bootstrapping) like so:
 
 ```js
-import 'react-virtualized/styles.css';
+import "react-virtualized/styles.css";
 ```
 
 You can also customize component styles in any of the ways below:

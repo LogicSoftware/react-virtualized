@@ -1,1 +1,1 @@
-export * from '../es/WindowScroller';
+export * from "../es/WindowScroller";

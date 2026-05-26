@@ -7,8 +7,8 @@
 - [List](List.md)
 - [Masonry](Masonry.md)
 - [Table](Table.md)
-  - [Column](Column.md)
-  - [SortDirection](SortDirection.md)
+    - [Column](Column.md)
+    - [SortDirection](SortDirection.md)
 
 ### High-Order Components
 

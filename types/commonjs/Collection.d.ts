@@ -1,1 +1,1 @@
-export * from '../es/Collection';
+export * from "../es/Collection";

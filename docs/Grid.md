@@ -107,16 +107,16 @@ Many use cases can be solved more easily using the `onScroll` callback or the `S
 If you do want to override `cellRangeRenderer` the easiest way is to decorate the default implementation like so:
 
 ```jsx
-import {defaultCellRangeRenderer, Grid} from 'react-virtualized';
+import { defaultCellRangeRenderer, Grid } from "react-virtualized";
 
 function cellRangeRenderer(props) {
-  const children = defaultCellRangeRenderer(props);
-  children.push(<div>My custom overlay</div>);
-  return children;
+    const children = defaultCellRangeRenderer(props);
+    children.push(<div>My custom overlay</div>);
+    return children;
 }
 
 function CustomizedGrid(props) {
-  return <Grid cellRangeRenderer={cellRangeRenderer} {...props} />;
+    return <Grid cellRangeRenderer={cellRangeRenderer} {...props} />;
 }
 ```
 
@@ -126,54 +126,48 @@ This function accepts the following named parameters:
 
 ```js
 function cellRangeRenderer({
-  cellCache, // Temporary cell cache used while scrolling
-  cellRenderer, // Cell renderer prop supplied to Grid
-  columnSizeAndPositionManager, // @see CellSizeAndPositionManager,
-  columnStartIndex, // Index of first column (inclusive) to render
-  columnStopIndex, // Index of last column (inclusive) to render
-  horizontalOffsetAdjustment, // Horizontal pixel offset (required for scaling)
-  isScrolling, // The Grid is currently being scrolled
-  rowSizeAndPositionManager, // @see CellSizeAndPositionManager,
-  rowStartIndex, // Index of first row (inclusive) to render
-  rowStopIndex, // Index of last row (inclusive) to render
-  scrollLeft, // Current horizontal scroll offset of Grid
-  scrollTop, // Current vertical scroll offset of Grid
-  styleCache, // Temporary style (size & position) cache used while scrolling
-  verticalOffsetAdjustment, // Vertical pixel offset (required for scaling)
+    cellCache, // Temporary cell cache used while scrolling
+    cellRenderer, // Cell renderer prop supplied to Grid
+    columnSizeAndPositionManager, // @see CellSizeAndPositionManager,
+    columnStartIndex, // Index of first column (inclusive) to render
+    columnStopIndex, // Index of last column (inclusive) to render
+    horizontalOffsetAdjustment, // Horizontal pixel offset (required for scaling)
+    isScrolling, // The Grid is currently being scrolled
+    rowSizeAndPositionManager, // @see CellSizeAndPositionManager,
+    rowStartIndex, // Index of first row (inclusive) to render
+    rowStopIndex, // Index of last row (inclusive) to render
+    scrollLeft, // Current horizontal scroll offset of Grid
+    scrollTop, // Current vertical scroll offset of Grid
+    styleCache, // Temporary style (size & position) cache used while scrolling
+    verticalOffsetAdjustment, // Vertical pixel offset (required for scaling)
 }) {
-  const renderedCells = [];
+    const renderedCells = [];
 
-  for (let rowIndex = rowStartIndex; rowIndex <= rowStopIndex; rowIndex++) {
-    // This contains :offset (top) and :size (height) information for the cell
-    let rowDatum = rowSizeAndPositionManager.getSizeAndPositionOfCell(rowIndex);
+    for (let rowIndex = rowStartIndex; rowIndex <= rowStopIndex; rowIndex++) {
+        // This contains :offset (top) and :size (height) information for the cell
+        let rowDatum = rowSizeAndPositionManager.getSizeAndPositionOfCell(rowIndex);
 
-    for (
-      let columnIndex = columnStartIndex;
-      columnIndex <= columnStopIndex;
-      columnIndex++
-    ) {
-      // This contains :offset (left) and :size (width) information for the cell
-      let columnDatum = columnSizeAndPositionManager.getSizeAndPositionOfCell(
-        columnIndex,
-      );
+        for (let columnIndex = columnStartIndex; columnIndex <= columnStopIndex; columnIndex++) {
+            // This contains :offset (left) and :size (width) information for the cell
+            let columnDatum = columnSizeAndPositionManager.getSizeAndPositionOfCell(columnIndex);
 
-      // Be sure to adjust cell position in case the total set of cells is too large to be supported by the browser natively.
-      // In this case, Grid will shift cells as a user scrolls to increase cell density.
-      let left = columnDatum.offset + horizontalOffsetAdjustment;
-      let top = rowDatum.offset + verticalOffsetAdjustment;
+            // Be sure to adjust cell position in case the total set of cells is too large to be supported by the browser natively.
+            // In this case, Grid will shift cells as a user scrolls to increase cell density.
+            let left = columnDatum.offset + horizontalOffsetAdjustment;
+            let top = rowDatum.offset + verticalOffsetAdjustment;
 
-      // The rest of the information you need to render the cell are contained in the data.
-      // Be sure to provide unique :key attributes.
-      let key = `${rowIndex}-${columnIndex}`;
-      let height = rowDatum.size;
-      let width = columnDatum.size;
+            // The rest of the information you need to render the cell are contained in the data.
+            // Be sure to provide unique :key attributes.
+            let key = `${rowIndex}-${columnIndex}`;
+            let height = rowDatum.size;
+            let width = columnDatum.size;
 
-      // Now render your cell and additional UI as you see fit.
-      // Add all rendered children to the :renderedCells Array.
+            // Now render your cell and additional UI as you see fit.
+            // Add all rendered children to the :renderedCells Array.
+        }
     }
-  }
 
-  return renderedCells;
+    return renderedCells;
 }
 ```
 
@@ -184,17 +178,17 @@ This function is responsible for calculating the number of cells to overscan bef
 
 ```js
 function overscanIndicesGetter({
-  direction, // One of "horizontal" or "vertical"
-  cellCount, // Number of rows or columns in the current axis
-  scrollDirection, // 1 (forwards) or -1 (backwards)
-  overscanCellsCount, // Maximum number of cells to over-render in either direction
-  startIndex, // Begin of range of visible cells
-  stopIndex, // End of range of visible cells
+    direction, // One of "horizontal" or "vertical"
+    cellCount, // Number of rows or columns in the current axis
+    scrollDirection, // 1 (forwards) or -1 (backwards)
+    overscanCellsCount, // Maximum number of cells to over-render in either direction
+    startIndex, // Begin of range of visible cells
+    stopIndex, // End of range of visible cells
 }) {
-  return {
-    overscanStartIndex: Math.max(0, startIndex - overscanCellsCount),
-    overscanStopIndex: Math.min(cellCount - 1, stopIndex + overscanCellsCount),
-  };
+    return {
+        overscanStartIndex: Math.max(0, startIndex - overscanCellsCount),
+        overscanStopIndex: Math.min(cellCount - 1, stopIndex + overscanCellsCount),
+    };
 }
 ```
 
@@ -205,36 +199,36 @@ This function accepts the following named parameters:
 
 ```jsx
 function cellRenderer({
-  columnIndex, // Horizontal (column) index of cell
-  isScrolling, // The Grid is currently being scrolled
-  isVisible, // This cell is visible within the grid (eg it is not an overscanned cell)
-  key, // Unique key within array of cells
-  parent, // Reference to the parent Grid (instance)
-  rowIndex, // Vertical (row) index of cell
-  style, // Style object to be applied to cell (to position it);
-  // This must be passed through to the rendered cell element.
+    columnIndex, // Horizontal (column) index of cell
+    isScrolling, // The Grid is currently being scrolled
+    isVisible, // This cell is visible within the grid (eg it is not an overscanned cell)
+    key, // Unique key within array of cells
+    parent, // Reference to the parent Grid (instance)
+    rowIndex, // Vertical (row) index of cell
+    style, // Style object to be applied to cell (to position it);
+    // This must be passed through to the rendered cell element.
 }) {
-  // Grid data is a 2d array in this example...
-  const user = list[rowIndex][columnIndex];
+    // Grid data is a 2d array in this example...
+    const user = list[rowIndex][columnIndex];
 
-  // If cell content is complex, consider rendering a lighter-weight placeholder while scrolling.
-  const content = isScrolling ? '...' : <User user={user} />;
+    // If cell content is complex, consider rendering a lighter-weight placeholder while scrolling.
+    const content = isScrolling ? "..." : <User user={user} />;
 
-  // Style is required since it specifies how the cell is to be sized and positioned.
-  // React Virtualized depends on this sizing/positioning for proper scrolling behavior.
-  // By default, the grid component provides the following style properties:
-  //    position
-  //    left
-  //    top
-  //    height
-  //    width
-  // You can add additional class names or style properties as you would like.
-  // Key is also required by React to more efficiently manage the array of cells.
-  return (
-    <div key={key} style={style}>
-      {content}
-    </div>
-  );
+    // Style is required since it specifies how the cell is to be sized and positioned.
+    // React Virtualized depends on this sizing/positioning for proper scrolling behavior.
+    // By default, the grid component provides the following style properties:
+    //    position
+    //    left
+    //    top
+    //    height
+    //    width
+    // You can add additional class names or style properties as you would like.
+    // Key is also required by React to more efficiently manage the array of cells.
+    return (
+        <div key={key} style={style}>
+            {content}
+        </div>
+    );
 }
 ```
 
@@ -243,35 +237,35 @@ function cellRenderer({
 Below is a very basic `Grid` example. The grid displays an array of objects with fixed row and column sizes. (Dynamic sizes are also supported but this example is intended to be basic.) [See here](../source/Grid/Grid.example.js) for a more full-featured example with dynamic cell sizes and more.
 
 ```jsx
-import React from 'react';
-import ReactDOM from 'react-dom';
-import {Grid} from 'react-virtualized';
+import React from "react";
+import ReactDOM from "react-dom";
+import { Grid } from "react-virtualized";
 
 // Grid data as an array of arrays
 const list = [
-  ['Brian Vaughn', 'Software Engineer', 'San Jose', 'CA', 95125 /* ... */],
-  // And so on...
+    ["Brian Vaughn", "Software Engineer", "San Jose", "CA", 95125 /* ... */],
+    // And so on...
 ];
 
-function cellRenderer({columnIndex, key, rowIndex, style}) {
-  return (
-    <div key={key} style={style}>
-      {list[rowIndex][columnIndex]}
-    </div>
-  );
+function cellRenderer({ columnIndex, key, rowIndex, style }) {
+    return (
+        <div key={key} style={style}>
+            {list[rowIndex][columnIndex]}
+        </div>
+    );
 }
 
 // Render your grid
 ReactDOM.render(
-  <Grid
-    cellRenderer={cellRenderer}
-    columnCount={list[0].length}
-    columnWidth={100}
-    height={300}
-    rowCount={list.length}
-    rowHeight={30}
-    width={300}
-  />,
-  document.getElementById('example'),
+    <Grid
+        cellRenderer={cellRenderer}
+        columnCount={list[0].length}
+        columnWidth={100}
+        height={300}
+        rowCount={list.length}
+        rowHeight={30}
+        width={300}
+    />,
+    document.getElementById("example"),
 );
 ```

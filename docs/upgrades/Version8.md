@@ -30,22 +30,22 @@ Due to the complexity of this change there is no codemod. However you can use th
 ```jsx
 // Can be used for Grid, List, or Table
 function createCellRenderer(cellRenderer) {
-  console.warn('cellRenderer udpate needed');
+    console.warn("cellRenderer udpate needed");
 
-  return function cellRendererWrapper({key, style, ...rest}) {
-    return (
-      <div className="Grid__cell" key={key} style={style}>
-        {cellRenderer(rest)}
-      </div>
-    );
-  };
+    return function cellRendererWrapper({ key, style, ...rest }) {
+        return (
+            <div className="Grid__cell" key={key} style={style}>
+                {cellRenderer(rest)}
+            </div>
+        );
+    };
 }
 
 // Demonstrates example usage
 function renderGrid(props) {
-  const {cellRenderer, ...rest} = props;
+    const { cellRenderer, ...rest } = props;
 
-  return <Grid cellRenderer={createCellRenderer(cellRenderer)} {...rest} />;
+    return <Grid cellRenderer={createCellRenderer(cellRenderer)} {...rest} />;
 }
 ```
 
