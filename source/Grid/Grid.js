@@ -853,14 +853,9 @@ class Grid extends React.PureComponent<Props, State> {
     let {instanceProps} = prevState;
 
     // Initially we should not clearStyleCache
-    newState.needToResetStyleCache = false;
-    if (
+    newState.needToResetStyleCache =
       nextProps.columnWidth !== instanceProps.prevColumnWidth ||
-      nextProps.rowHeight !== instanceProps.prevRowHeight
-    ) {
-      // Reset cache. set it to {} in render
-      newState.needToResetStyleCache = true;
-    }
+      nextProps.rowHeight !== instanceProps.prevRowHeight;
 
     instanceProps.columnSizeAndPositionManager.configure({
       cellCount: nextProps.columnCount,
@@ -1013,10 +1008,12 @@ class Grid extends React.PureComponent<Props, State> {
     // Force browser to hide scrollbars when we know they aren't necessary.
     // Otherwise once scrollbars appear they may not disappear again.
     // For more info see issue #116
-    const verticalScrollBarSize =
-      totalRowsHeight > height ? instanceProps.scrollbarSize : 0;
     const horizontalScrollBarSize =
       totalColumnsWidth > width ? instanceProps.scrollbarSize : 0;
+    const verticalScrollBarSize =
+      totalRowsHeight + horizontalScrollBarSize > height
+        ? instanceProps.scrollbarSize
+        : 0;
 
     if (
       horizontalScrollBarSize !== this._horizontalScrollBarSize ||
