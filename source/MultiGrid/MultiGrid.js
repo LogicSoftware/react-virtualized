@@ -1,4 +1,3 @@
-/** @flow */
 import PropTypes from 'prop-types';
 import * as React from 'react';
 import {polyfill} from 'react-lifecycles-compat';
@@ -623,13 +622,15 @@ class MultiGrid extends React.PureComponent {
       return null;
     }
 
-    const additionalRowCount = showHorizontalScrollbar ? 1 : 0,
-      height = this._getBottomGridHeight(props),
-      width = this._getLeftGridWidth(props),
-      scrollbarSize = this.state.showVerticalScrollbar
-        ? this.state.scrollbarSize
-        : 0,
-      gridWidth = hideBottomLeftGridScrollbar ? width + scrollbarSize : width;
+    const additionalRowCount = showHorizontalScrollbar ? 1 : 0;
+    const height = this._getBottomGridHeight(props);
+    const width = this._getLeftGridWidth(props);
+    const scrollbarSize = this.state.showVerticalScrollbar
+      ? this.state.scrollbarSize
+      : 0;
+    const gridWidth = hideBottomLeftGridScrollbar
+      ? width + scrollbarSize
+      : width;
 
     const bottomLeftGrid = (
       <Grid
@@ -735,13 +736,15 @@ class MultiGrid extends React.PureComponent {
       return null;
     }
 
-    const additionalColumnCount = showVerticalScrollbar ? 1 : 0,
-      height = this._getTopGridHeight(props),
-      width = this._getRightGridWidth(props),
-      additionalHeight = this.state.showHorizontalScrollbar ? scrollbarSize : 0;
+    const additionalColumnCount = showVerticalScrollbar ? 1 : 0;
+    const height = this._getTopGridHeight(props);
+    const width = this._getRightGridWidth(props);
+    const additionalHeight = this.state.showHorizontalScrollbar
+      ? scrollbarSize
+      : 0;
 
-    let gridHeight = height,
-      style = this._topRightGridStyle;
+    let gridHeight = height;
+    let style = this._topRightGridStyle;
 
     if (hideTopRightGridScrollbar) {
       gridHeight = height + additionalHeight;

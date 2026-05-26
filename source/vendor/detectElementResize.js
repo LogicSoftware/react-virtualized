@@ -8,12 +8,15 @@
  * 2) Defer initialization code via a top-level function wrapper (to support SSR).
  * 3) Avoid unnecessary reflows by not measuring size for scroll events bubbling from children.
  * 4) Add nonce for style element.
+ * 5) Added support for injecting custom window object
  **/
 
-export default function createDetectElementResize(nonce) {
+export default function createDetectElementResize(nonce, hostWindow) {
   // Check `document` and `window` in case of server-side rendering
   var _window;
-  if (typeof window !== 'undefined') {
+  if (typeof hostWindow !== 'undefined') {
+    _window = hostWindow;
+  } else if (typeof window !== 'undefined') {
     _window = window;
   } else if (typeof self !== 'undefined') {
     _window = self;
@@ -21,7 +24,8 @@ export default function createDetectElementResize(nonce) {
     _window = global;
   }
 
-  var attachEvent = typeof document !== 'undefined' && document.attachEvent;
+  var attachEvent =
+    typeof _window.document !== 'undefined' && _window.document.attachEvent;
 
   if (!attachEvent) {
     var requestFrame = (function() {
@@ -105,7 +109,7 @@ export default function createDetectElementResize(nonce) {
       ),
       pfx = '';
     {
-      var elm = document.createElement('fakeelement');
+      var elm = _window.document.createElement('fakeelement');
       if (elm.style.animationName !== undefined) {
         animation = true;
       }
@@ -178,9 +182,13 @@ export default function createDetectElementResize(nonce) {
         element.__resizeListeners__ = [];
         (element.__resizeTriggers__ = doc.createElement('div')).className =
           'resize-triggers';
-        element.__resizeTriggers__.innerHTML =
-          '<div class="expand-trigger"><div></div></div>' +
-          '<div class="contract-trigger"></div>';
+        var expandTrigger = doc.createElement('div');
+        expandTrigger.className = 'expand-trigger';
+        expandTrigger.appendChild(doc.createElement('div'));
+        var contractTrigger = doc.createElement('div');
+        contractTrigger.className = 'contract-trigger';
+        element.__resizeTriggers__.appendChild(expandTrigger);
+        element.__resizeTriggers__.appendChild(contractTrigger);
         element.appendChild(element.__resizeTriggers__);
         resetTriggers(element);
         element.addEventListener('scroll', scrollListener, true);

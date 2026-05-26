@@ -17,12 +17,7 @@ export {
     ChildProps as ArrowKeyStepperChildProps,
     ScrollIndices
 } from "./types/es/ArrowKeyStepper";
-export {
-    AutoSizer,
-    AutoSizerProps,
-    Dimensions,
-    Size
-} from "./types/es/AutoSizer";
+export { AutoSizer, AutoSizerProps, Dimensions, Size } from "./types/es/AutoSizer";
 export {
     CellMeasurer,
     CellMeasurerCache,
@@ -40,11 +35,7 @@ export {
     CollectionCellSizeAndPositionGetter,
     CollectionProps
 } from "./types/es/Collection";
-export {
-    ColumnSizer,
-    ColumnSizerProps,
-    SizedColumnProps
-} from "./types/es/ColumnSizer";
+export { ColumnSizer, ColumnSizerProps, SizedColumnProps } from "./types/es/ColumnSizer";
 export {
     accessibilityOverscanIndicesGetter,
     defaultOverscanIndicesGetter,
@@ -69,11 +60,7 @@ export {
     VisibleCellRange,
     ScrollbarPresenceParams
 } from "./types/es/Grid";
-export {
-    InfiniteLoader,
-    InfiniteLoaderChildProps,
-    InfiniteLoaderProps
-} from "./types/es/InfiniteLoader";
+export { InfiniteLoader, InfiniteLoaderChildProps, InfiniteLoaderProps } from "./types/es/InfiniteLoader";
 export { List, ListProps, ListRowProps, ListRowRenderer } from "./types/es/List";
 export {
     createCellPositioner as createMasonryCellPositioner,

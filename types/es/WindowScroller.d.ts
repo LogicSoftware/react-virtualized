@@ -59,10 +59,7 @@ export type WindowScrollerState = {
     scrollTop: number;
 };
 
-export class WindowScroller extends PureComponent<
-    WindowScrollerProps,
-    WindowScrollerState
-> {
+export class WindowScroller extends PureComponent<WindowScrollerProps, WindowScrollerState> {
     static defaultProps: {
         onResize: () => void;
         onScroll: () => void;

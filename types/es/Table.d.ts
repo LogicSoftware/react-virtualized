@@ -1,12 +1,6 @@
 import { Validator, ReactNode, Requireable, PureComponent, Component } from "react";
 import { CellMeasurerCache } from "./CellMeasurer";
-import {
-    Index,
-    Alignment,
-    ScrollEventData,
-    IndexRange,
-    OverscanIndexRange
-} from "../../index";
+import { Index, Alignment, ScrollEventData, IndexRange, OverscanIndexRange } from "../../index";
 import { Grid, GridCoreProps } from "./Grid";
 
 export type SortParams = {
@@ -42,9 +36,7 @@ export type MultiSortReturn = {
 };
 
 export function createMultiSort(
-    sortCallback: (
-        params: { sortBy: string; sortDirection: SortDirectionType }
-    ) => void,
+    sortCallback: (params: { sortBy: string; sortDirection: SortDirectionType }) => void,
     options?: MultiSortOptions
 ): MultiSortReturn;
 
@@ -96,9 +88,7 @@ export type TableRowProps = {
 export type TableCellDataGetter = (params: TableCellDataGetterParams) => any;
 export type TableCellRenderer = (props: TableCellProps) => React.ReactNode;
 export type TableHeaderRenderer = (props: TableHeaderProps) => React.ReactNode;
-export type TableHeaderRowRenderer = (
-    props: TableHeaderRowProps
-) => React.ReactNode;
+export type TableHeaderRowRenderer = (props: TableHeaderRowProps) => React.ReactNode;
 export type TableRowRenderer = (props: TableRowProps) => React.ReactNode;
 
 // https://github.com/bvaughn/react-virtualized/blob/master/docs/Column.md
@@ -183,7 +173,7 @@ export class Column extends Component<ColumnProps> {
 }
 
 export type RowMouseEventHandlerParams = {
-    rowData: any
+    rowData: any;
     index: number;
     event: React.MouseEvent<any>;
 };
@@ -341,9 +331,7 @@ export type TableProps = GridCoreProps & {
 
 export const defaultCellDataGetter: TableCellDataGetter;
 export const defaultCellRenderer: TableCellRenderer;
-export const defaultHeaderRenderer: () => React.ReactElement<
-    TableHeaderProps
->[];
+export const defaultHeaderRenderer: () => React.ReactElement<TableHeaderProps>[];
 export const defaultHeaderRowRenderer: TableHeaderRowRenderer;
 export const defaultRowRenderer: TableRowRenderer;
 
@@ -390,22 +378,12 @@ export class Table extends PureComponent<TableProps> {
         height: Validator<number>;
         id: Requireable<string>;
         noRowsRenderer: Requireable<() => JSX.Element>;
-        onHeaderClick: Requireable<
-            (params: HeaderMouseEventHandlerParams) => void
-        >;
+        onHeaderClick: Requireable<(params: HeaderMouseEventHandlerParams) => void>;
         onRowClick: Requireable<(params: RowMouseEventHandlerParams) => void>;
-        onRowDoubleClick: Requireable<
-            (params: RowMouseEventHandlerParams) => void
-        >;
-        onRowMouseOut: Requireable<
-            (params: RowMouseEventHandlerParams) => void
-        >;
-        onRowMouseOver: Requireable<
-            (params: RowMouseEventHandlerParams) => void
-        >;
-        onRowsRendered: Requireable<
-            (params: RowMouseEventHandlerParams) => void
-        >;
+        onRowDoubleClick: Requireable<(params: RowMouseEventHandlerParams) => void>;
+        onRowMouseOut: Requireable<(params: RowMouseEventHandlerParams) => void>;
+        onRowMouseOver: Requireable<(params: RowMouseEventHandlerParams) => void>;
+        onRowsRendered: Requireable<(params: RowMouseEventHandlerParams) => void>;
         onScroll: Requireable<(params: ScrollEventData) => void>;
         overscanRowCount: Validator<number>;
         rowClassName: Requireable<string | ((params: Index) => string)>;
@@ -413,17 +391,11 @@ export class Table extends PureComponent<TableProps> {
         rowHeight: Validator<number | ((params: Index) => number)>;
         rowCount: Validator<number>;
         rowRenderer: Requireable<(props: TableRowProps) => React.ReactNode>;
-        rowStyle: Validator<
-            React.CSSProperties | ((params: Index) => React.CSSProperties)
-        >;
+        rowStyle: Validator<React.CSSProperties | ((params: Index) => React.CSSProperties)>;
         scrollToAlignment: Validator<Alignment>;
         scrollToIndex: Validator<number>;
         scrollTop: Requireable<number>;
-        sort: Requireable<
-            (
-                params: { sortBy: string; sortDirection: SortDirectionType }
-            ) => void
-        >;
+        sort: Requireable<(params: { sortBy: string; sortDirection: SortDirectionType }) => void>;
         sortBy: Requireable<string>;
         sortDirection: Validator<SortDirectionType>;
         style: Requireable<React.CSSProperties>;

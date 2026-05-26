@@ -74,9 +74,7 @@ export type OverscanIndices = {
     overscanStartIndex: number;
     overscanStopIndex: number;
 };
-export type OverscanIndicesGetter = (
-    params: OverscanIndicesGetterParams
-) => OverscanIndices;
+export type OverscanIndicesGetter = (params: OverscanIndicesGetterParams) => OverscanIndices;
 
 export type ScrollOffset = {
     scrollLeft: number;
@@ -89,10 +87,7 @@ export type CellSizeAndPositionManager = {
     getCellCount(): number;
     getEstimatedCellSize(): number;
     getLastMeasuredIndex(): number;
-    getOffsetAdjustment({
-        containerSize,
-        offset /*safe*/
-    }: ContainerSizeAndOffset): number;
+    getOffsetAdjustment({ containerSize, offset /*safe*/ }: ContainerSizeAndOffset): number;
     /**
      * This method returns the size and position for the cell at the specified index.
      * It just-in-time calculates (or used cached values) for cells leading up to the index.
@@ -151,9 +146,7 @@ export type GridCellRangeProps = {
     visibleColumnIndices: VisibleCellRange;
     visibleRowIndices: VisibleCellRange;
 };
-export type GridCellRangeRenderer = (
-    params: GridCellRangeProps
-) => React.ReactNode[];
+export type GridCellRangeRenderer = (params: GridCellRangeProps) => React.ReactNode[];
 
 export type GridCoreProps = {
     "aria-label"?: string;
@@ -394,11 +387,7 @@ export class Grid extends PureComponent<GridProps, GridState> {
     /**
      * Gets offsets for a given cell and alignment.
      */
-    getOffsetForCell(params?: {
-        alignment?: Alignment;
-        columnIndex?: number;
-        rowIndex?: number;
-    }): ScrollOffset;
+    getOffsetForCell(params?: { alignment?: Alignment; columnIndex?: number; rowIndex?: number }): ScrollOffset;
 
     /**
      * This method handles a scroll event originating from an external scroll control.
@@ -413,10 +402,7 @@ export class Grid extends PureComponent<GridProps, GridState> {
      * This method is intended for advanced use-cases like CellMeasurer.
      */
     // @TODO (bvaughn) Add automated test coverage for this.
-    invalidateCellSizeAfterRender(params: {
-        columnIndex: number;
-        rowIndex: number;
-    }): void;
+    invalidateCellSizeAfterRender(params: { columnIndex: number; rowIndex: number }): void;
 
     /**
      * Pre-measure all columns and rows in a Grid.
@@ -430,10 +416,7 @@ export class Grid extends PureComponent<GridProps, GridState> {
      * This function should be called if dynamic column or row sizes have changed but nothing else has.
      * Since Grid only receives :columnCount and :rowCount it has no way of detecting when the underlying data changes.
      */
-    recomputeGridSize(params?: {
-        columnIndex?: number;
-        rowIndex?: number;
-    }): void;
+    recomputeGridSize(params?: { columnIndex?: number; rowIndex?: number }): void;
 
     /**
      * Ensure column and row are visible.
