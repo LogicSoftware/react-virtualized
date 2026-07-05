@@ -4,7 +4,6 @@ import type {RenderedSection} from '../Grid';
 import type {ScrollIndices} from './types';
 
 import * as React from 'react';
-import {polyfill} from 'react-lifecycles-compat';
 
 /**
  * This HOC decorates a virtualized component and responds to arrow-key events by scrolling one row or column at a time.
@@ -43,6 +42,10 @@ class ArrowKeyStepper extends React.PureComponent<Props, State> {
   state = {
     scrollToColumn: 0,
     scrollToRow: 0,
+    // Track previous prop values so getDerivedStateFromProps only updates state
+    // when a prop actually changes, not on every setState (React 18 requirement).
+    _prevPropsScrollToColumn: undefined,
+    _prevPropsScrollToRow: undefined,
   };
 
   _columnStartIndex = 0;
@@ -58,17 +61,25 @@ class ArrowKeyStepper extends React.PureComponent<Props, State> {
       return null;
     }
 
-    if (
-      nextProps.scrollToColumn !== prevState.scrollToColumn ||
-      nextProps.scrollToRow !== prevState.scrollToRow
-    ) {
-      return {
-        scrollToColumn: nextProps.scrollToColumn,
-        scrollToRow: nextProps.scrollToRow,
-      };
+    // Only sync state from props when the prop value actually changes between
+    // renders (compare to saved previous prop, not current state). This avoids
+    // getDerivedStateFromProps overriding internal setState calls when the prop
+    // value stays the same but state was updated by the user pressing an arrow key.
+    const result = {};
+    let changed = false;
+
+    if (nextProps.scrollToColumn !== prevState._prevPropsScrollToColumn) {
+      result.scrollToColumn = nextProps.scrollToColumn;
+      result._prevPropsScrollToColumn = nextProps.scrollToColumn;
+      changed = true;
+    }
+    if (nextProps.scrollToRow !== prevState._prevPropsScrollToRow) {
+      result.scrollToRow = nextProps.scrollToRow;
+      result._prevPropsScrollToRow = nextProps.scrollToRow;
+      changed = true;
     }
 
-    return null;
+    return changed ? result : null;
   }
 
   setScrollIndexes({scrollToColumn, scrollToRow}: ScrollIndices) {
@@ -175,6 +186,5 @@ class ArrowKeyStepper extends React.PureComponent<Props, State> {
   }
 }
 
-polyfill(ArrowKeyStepper);
 
 export default ArrowKeyStepper;

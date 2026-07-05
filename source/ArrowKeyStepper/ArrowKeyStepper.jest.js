@@ -2,7 +2,7 @@ import * as React from 'react';
 import {findDOMNode} from 'react-dom';
 import {render} from '../TestUtils';
 import ArrowKeyStepper from './ArrowKeyStepper';
-import {Simulate} from 'react-dom/test-utils';
+import {Simulate, act} from 'react-dom/test-utils';
 
 function renderTextContent(scrollToColumn, scrollToRow) {
   return `scrollToColumn:${scrollToColumn}, scrollToRow:${scrollToRow}`;
@@ -16,7 +16,7 @@ describe('ArrowKeyStepper', () => {
   function renderHelper(props = {}) {
     let onSectionRenderedCallback;
 
-    const component = render(
+    const node = render(
       <ArrowKeyStepper columnCount={10} mode="edges" rowCount={10} {...props}>
         {({onSectionRendered, scrollToColumn, scrollToRow}) => {
           onSectionRenderedCallback = onSectionRendered;
@@ -30,10 +30,9 @@ describe('ArrowKeyStepper', () => {
         }}
       </ArrowKeyStepper>,
     );
-    const node = findDOMNode(component);
 
     return {
-      component,
+      component: render._instance,
       node,
       onSectionRendered: onSectionRenderedCallback,
     };
@@ -126,9 +125,12 @@ describe('ArrowKeyStepper', () => {
     });
     Simulate.keyDown(node, {key: 'ArrowDown'});
     assertCurrentScrollTo(node, 2, 5);
-    component.setScrollIndexes({
-      scrollToColumn: 1,
-      scrollToRow: 1,
+    // Wrap in act() to flush the imperative setState before the next Simulate call
+    act(() => {
+      component.setScrollIndexes({
+        scrollToColumn: 1,
+        scrollToRow: 1,
+      });
     });
     Simulate.keyDown(node, {key: 'ArrowRight'});
     assertCurrentScrollTo(node, 2, 1);

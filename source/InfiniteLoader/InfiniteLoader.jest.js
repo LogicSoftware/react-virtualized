@@ -5,6 +5,7 @@ import InfiniteLoader, {
 } from './InfiniteLoader';
 import * as React from 'react';
 import List from '../List';
+import {act} from 'react-dom/test-utils';
 import {render} from '../TestUtils';
 
 describe('InfiniteLoader', () => {
@@ -109,7 +110,7 @@ describe('InfiniteLoader', () => {
     expect(loadMoreRowsCalls).toEqual([{startIndex: 0, stopIndex: 9}]);
   });
 
-  it('should :forceUpdate once rows have loaded if :loadMoreRows returns a Promise', async done => {
+  it('should :forceUpdate once rows have loaded if :loadMoreRows returns a Promise', async () => {
     let savedResolve;
     function loadMoreRows() {
       return new Promise(resolve => {
@@ -118,12 +119,13 @@ describe('InfiniteLoader', () => {
     }
     render(getMarkup({loadMoreRows}));
     rowRendererCalls.splice(0);
-    await savedResolve();
+    await act(async () => {
+      await savedResolve();
+    });
     expect(rowRendererCalls.length > 0).toEqual(true);
-    done();
   });
 
-  it('should not :forceUpdate once rows have loaded rows are no longer visible', async done => {
+  it('should not :forceUpdate once rows have loaded rows are no longer visible', async () => {
     let resolves = [];
     function loadMoreRows() {
       return new Promise(resolve => {
@@ -134,9 +136,10 @@ describe('InfiniteLoader', () => {
     // Simulate a new range of rows being loaded
     innerOnRowsRendered({startIndex: 100, stopIndex: 101});
     rowRendererCalls.splice(0);
-    await resolves[0](); // Resolve the first request only, not the simulated row-change
+    await act(async () => {
+      await resolves[0](); // Resolve the first request only, not the simulated row-change
+    });
     expect(rowRendererCalls.length).toEqual(0);
-    done();
   });
 
   describe('minimumBatchSize', () => {
@@ -267,13 +270,14 @@ describe('InfiniteLoader', () => {
   });
 
   it('resetLoadMoreRowsCache should reset memoized state', () => {
-    const component = render(
+    render(
       getMarkup({
         isRowLoaded: () => false,
         minimumBatchSize: 20,
         threshold: 0,
       }),
     );
+    const component = render._instance;
     expect(loadMoreRowsCalls).toEqual([{startIndex: 0, stopIndex: 19}]);
     innerOnRowsRendered({startIndex: 0, stopIndex: 15});
     loadMoreRowsCalls.splice(0);
@@ -284,13 +288,14 @@ describe('InfiniteLoader', () => {
   });
 
   it('resetLoadMoreRowsCache should call :loadMoreRows if :autoReload parameter is true', () => {
-    const component = render(
+    render(
       getMarkup({
         isRowLoaded: () => false,
         minimumBatchSize: 1,
         threshold: 0,
       }),
     );
+    const component = render._instance;
 
     // Simulate a new range of rows being loaded
     loadMoreRowsCalls.splice(0);
@@ -440,7 +445,8 @@ describe('forceUpdateReactVirtualizedComponent', () => {
         return <div />;
       }
     }
-    forceUpdateReactVirtualizedComponent(render(<TestComponent />), 10);
+    render(<TestComponent />);
+    forceUpdateReactVirtualizedComponent(render._instance, 10);
     expect(recomputeGridSize).toHaveBeenCalledTimes(1);
     expect(recomputeGridSize).toHaveBeenCalledWith(10);
   });
@@ -453,7 +459,8 @@ describe('forceUpdateReactVirtualizedComponent', () => {
         return <div />;
       }
     }
-    forceUpdateReactVirtualizedComponent(render(<TestComponent />), 10);
+    render(<TestComponent />);
+    forceUpdateReactVirtualizedComponent(render._instance, 10);
     expect(recomputeRowHeights).toHaveBeenCalledTimes(1);
     expect(recomputeRowHeights).toHaveBeenCalledWith(10);
   });
@@ -466,7 +473,8 @@ describe('forceUpdateReactVirtualizedComponent', () => {
         return <div />;
       }
     }
-    forceUpdateReactVirtualizedComponent(render(<TestComponent />), 10);
+    render(<TestComponent />);
+    forceUpdateReactVirtualizedComponent(render._instance, 10);
     expect(forceUpdate).toHaveBeenCalledTimes(1);
   });
 });

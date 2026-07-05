@@ -29,7 +29,6 @@ import defaultOverscanIndicesGetter, {
 import updateScrollIndexHelper from './utils/updateScrollIndexHelper';
 import defaultCellRangeRenderer from './defaultCellRangeRenderer';
 import scrollbarSize from 'dom-helpers/util/scrollbarSize';
-import {polyfill} from 'react-lifecycles-compat';
 import {
   requestAnimationTimeout,
   cancelAnimationTimeout,
@@ -1651,5 +1650,4 @@ class Grid extends React.PureComponent<Props, State> {
   };
 }
 
-polyfill(Grid);
 export default Grid;

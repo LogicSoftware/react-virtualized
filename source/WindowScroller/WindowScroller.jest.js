@@ -2,6 +2,7 @@
 
 import * as React from 'react';
 import {findDOMNode} from 'react-dom';
+import {act} from 'react-dom/test-utils';
 import {render} from '../TestUtils';
 import WindowScroller, {IS_SCROLLING_TIMEOUT} from './WindowScroller';
 
@@ -74,8 +75,8 @@ describe('WindowScroller', () => {
 
   // Starts updating scrollTop only when the top position is reached
   it('should have correct top and left properties to be defined on :_positionFromTop and :_positionFromLeft', () => {
-    const component = render(getMarkup());
-    const rendered = findDOMNode(component);
+    const rendered = render(getMarkup());
+    const component = render._instance;
     const {top, left} = rendered.getBoundingClientRect();
     expect(component._positionFromTop).toEqual(top);
     expect(component._positionFromLeft).toEqual(left);
@@ -95,7 +96,8 @@ describe('WindowScroller', () => {
       left: 350,
     });
     const renderFn = jest.fn();
-    const component = render(getMarkup({scrollElement, renderFn}));
+    render(getMarkup({scrollElement, renderFn}));
+    const component = render._instance;
     renderFn.mock.calls[0][0].registerChild(child);
     expect(component._positionFromTop).toEqual(300 + 100 - 200);
     expect(component._positionFromLeft).toEqual(350 + 150 - 250);
@@ -120,12 +122,12 @@ describe('WindowScroller', () => {
     render.unmount();
 
     // Simulate scrolled documentElement
-    const component = render(
+    const rendered = render(
       getMarkup({
         documentOffset: -100,
       }),
     );
-    const rendered = findDOMNode(component);
+    const component = render._instance;
     const {top, left} = rendered.getBoundingClientRect();
     expect(component._positionFromTop).toEqual(top + 100);
     expect(component._positionFromLeft).toEqual(left + 100);
@@ -135,7 +137,8 @@ describe('WindowScroller', () => {
 
   it('inherits the window height and passes it to child component', () => {
     const renderFn = jest.fn();
-    const component = render(getMarkup({renderFn}));
+    render(getMarkup({renderFn}));
+    const component = render._instance;
 
     expect(component.state.height).toEqual(window.innerHeight);
     expect(component.state.height).toEqual(500);
@@ -197,7 +200,8 @@ describe('WindowScroller', () => {
 
     it('should update :scrollTop when window is scrolled', async () => {
       const renderFn = jest.fn();
-      const component = render(getMarkup({renderFn}));
+      render(getMarkup({renderFn}));
+      const component = render._instance;
 
       // Initial load of the component should have 0 scrollTop
       expect(renderFn).lastCalledWith(
@@ -224,7 +228,9 @@ describe('WindowScroller', () => {
       const renderFn = jest.fn();
       render(getMarkup({renderFn}));
 
-      simulateWindowScroll({scrollY: 5000});
+      act(() => {
+        simulateWindowScroll({scrollY: 5000});
+      });
 
       expect(renderFn).lastCalledWith(
         expect.objectContaining({
@@ -256,7 +262,9 @@ describe('WindowScroller', () => {
         }),
       );
 
-      simulateWindowScroll({scrollY: 5000});
+      act(() => {
+        simulateWindowScroll({scrollY: 5000});
+      });
 
       expect(renderFn).lastCalledWith(
         expect.objectContaining({
@@ -303,7 +311,8 @@ describe('WindowScroller', () => {
 
     it('should update height when window resizes', () => {
       const renderFn = jest.fn();
-      const component = render(getMarkup({renderFn}));
+      render(getMarkup({renderFn}));
+      const component = render._instance;
 
       // Initial load of the component should have the same window height = 500
       expect(component.state.height).toEqual(window.innerHeight);
@@ -314,7 +323,9 @@ describe('WindowScroller', () => {
         }),
       );
 
-      simulateWindowResize({height: 1000});
+      act(() => {
+        simulateWindowResize({height: 1000});
+      });
 
       expect(component.state.height).toEqual(window.innerHeight);
       expect(component.state.height).toEqual(1000);
@@ -434,7 +445,9 @@ describe('WindowScroller', () => {
 
       render(getMarkup({renderFn}));
 
-      simulateWindowScroll({scrollY: 200});
+      act(() => {
+        simulateWindowScroll({scrollY: 200});
+      });
 
       window.scrollTo = jest.fn();
 
@@ -468,7 +481,9 @@ describe('WindowScroller', () => {
 
       render(getMarkup({renderFn}));
 
-      renderFn.mock.calls[0][0].onChildScroll({scrollTop: 200});
+      act(() => {
+        renderFn.mock.calls[0][0].onChildScroll({scrollTop: 200});
+      });
 
       expect(renderFn).lastCalledWith(
         expect.objectContaining({scrollTop: 200}),

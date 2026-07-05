@@ -2493,7 +2493,7 @@ describe('Grid', () => {
 
   describe('DEV warnings', () => {
     it('should warn about cells that forget to include the :style property', () => {
-      spyOn(console, 'warn');
+      jest.spyOn(console, 'warn');
 
       function cellRenderer(params) {
         return <div key={params.key} />;
@@ -2512,7 +2512,7 @@ describe('Grid', () => {
     });
 
     it('should warn about CellMeasurer measured cells that forget to include the :style property', () => {
-      spyOn(console, 'warn');
+      jest.spyOn(console, 'warn');
 
       const cache = new CellMeasurerCache({
         fixedWidth: true,

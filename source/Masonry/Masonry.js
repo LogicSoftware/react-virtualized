@@ -1,7 +1,6 @@
 /** @flow */
 import clsx from 'clsx';
 import * as React from 'react';
-import {polyfill} from 'react-lifecycles-compat';
 import PositionCache from './PositionCache';
 import {
   requestAnimationTimeout,
@@ -482,7 +481,6 @@ type Position = {
   top: number,
 };
 
-polyfill(Masonry);
 
 export default Masonry;
 

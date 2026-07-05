@@ -1,5 +1,6 @@
 import * as React from 'react';
 import {findDOMNode} from 'react-dom';
+import {act} from 'react-dom/test-utils';
 import {render} from '../TestUtils';
 import ScrollSync from './ScrollSync';
 
@@ -64,13 +65,15 @@ describe('ScrollSync', () => {
         }}
       </ScrollSync>,
     );
-    onScroll({
-      clientHeight: 400,
-      clientWidth: 200,
-      scrollHeight: 1000,
-      scrollLeft: 50,
-      scrollTop: 100,
-      scrollWidth: 500,
+    act(() => {
+      onScroll({
+        clientHeight: 400,
+        clientWidth: 200,
+        scrollHeight: 1000,
+        scrollLeft: 50,
+        scrollTop: 100,
+        scrollWidth: 500,
+      });
     });
     expect(findDOMNode(component).textContent).toContain('clientHeight:400');
     expect(findDOMNode(component).textContent).toContain('clientWidth:200');

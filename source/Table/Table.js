@@ -6,7 +6,6 @@ import clsx from 'clsx';
 import Column from './Column';
 import PropTypes from 'prop-types';
 import * as React from 'react';
-import {findDOMNode} from 'react-dom';
 import Grid, {accessibilityOverscanIndicesGetter} from '../Grid';
 
 import defaultRowRenderer from './defaultRowRenderer';
@@ -726,9 +725,9 @@ export default class Table extends React.PureComponent {
 
   _setScrollbarWidth() {
     if (this.Grid) {
-      const Grid = findDOMNode(this.Grid);
-      const clientWidth = Grid.clientWidth || 0;
-      const offsetWidth = Grid.offsetWidth || 0;
+      const Grid = this.Grid._scrollingContainer;
+      const clientWidth = (Grid && Grid.clientWidth) || 0;
+      const offsetWidth = (Grid && Grid.offsetWidth) || 0;
       const scrollbarWidth = offsetWidth - clientWidth;
 
       this.setState({scrollbarWidth});

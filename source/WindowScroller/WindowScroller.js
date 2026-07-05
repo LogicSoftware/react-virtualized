@@ -1,7 +1,6 @@
 // @flow
 
 import * as React from 'react';
-import * as ReactDOM from 'react-dom';
 import {
   registerScrollListener,
   unregisterScrollListener,
@@ -88,6 +87,7 @@ export default class WindowScroller extends React.PureComponent<Props, State> {
   _positionFromLeft = 0;
   _detectElementResize: DetectElementResize;
   _child: ?Element;
+  _containerRef = React.createRef();
 
   state = {
     ...getDimensions(this.props.scrollElement, this.props),
@@ -100,7 +100,10 @@ export default class WindowScroller extends React.PureComponent<Props, State> {
     const {onResize} = this.props;
     const {height, width} = this.state;
 
-    const thisNode = this._child || ReactDOM.findDOMNode(this);
+    // Prefer a child registered via registerChild(), otherwise fall back to
+    // the container div that wraps our children (replaces the deprecated
+    // ReactDOM.findDOMNode fallback removed for React 18 compatibility).
+    const thisNode = this._child || this._containerRef.current;
     if (thisNode instanceof Element && scrollElement) {
       const offset = getPositionOffset(thisNode, scrollElement);
       this._positionFromTop = offset.top;
@@ -168,15 +171,19 @@ export default class WindowScroller extends React.PureComponent<Props, State> {
     const {children} = this.props;
     const {isScrolling, scrollTop, scrollLeft, height, width} = this.state;
 
-    return children({
-      onChildScroll: this._onChildScroll,
-      registerChild: this._registerChild,
-      height,
-      isScrolling,
-      scrollLeft,
-      scrollTop,
-      width,
-    });
+    return (
+      <div ref={this._containerRef}>
+        {children({
+          onChildScroll: this._onChildScroll,
+          registerChild: this._registerChild,
+          height,
+          isScrolling,
+          scrollLeft,
+          scrollTop,
+          width,
+        })}
+      </div>
+    );
   }
 
   _registerChild = element => {
