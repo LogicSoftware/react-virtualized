@@ -1,13 +1,12 @@
-import type * as PropTypes from "prop-types";
-import { JSX, PureComponent } from "react";
+import { PureComponent, Validator, Requireable } from "react";
 import {
     Alignment,
     Index,
     ScrollParams,
     ScrollPosition,
     SectionRenderedParams,
-    SizeAndPositionInfo,
     SizeInfo,
+    SizeAndPositionInfo
 } from "../../index";
 
 export type CollectionCellSizeAndPosition = {
@@ -16,28 +15,34 @@ export type CollectionCellSizeAndPosition = {
     x: number;
     y: number;
 };
-export type CollectionCellSizeAndPositionGetter = (params: Index) => CollectionCellSizeAndPosition;
+export type CollectionCellSizeAndPositionGetter = (
+    params: Index
+) => CollectionCellSizeAndPosition;
 
 export type CollectionCellGroupRendererParams = {
     cellSizeAndPositionGetter: CollectionCellSizeAndPositionGetter;
     indices: number[];
     cellRenderer: CollectionCellRenderer;
 };
-export type CollectionCellGroupRenderer = (params: CollectionCellGroupRendererParams) => React.ReactNode[];
+export type CollectionCellGroupRenderer = (
+    params: CollectionCellGroupRendererParams
+) => React.ReactNode[];
 export type CollectionCellRendererParams = {
     index: number;
     isScrolling: boolean;
     key: number;
     style: React.CSSProperties;
 };
-export type CollectionCellRenderer = (params: CollectionCellRendererParams) => React.ReactNode;
+export type CollectionCellRenderer = (
+    params: CollectionCellRendererParams
+) => React.ReactNode;
 export type CollectionProps = {
-    "aria-label"?: string | undefined;
+    "aria-label"?: string;
     /**
      * Outer height of Collection is set to "auto". This property should only be
      * used in conjunction with the WindowScroller HOC.
      */
-    autoHeight?: boolean | undefined;
+    autoHeight?: boolean;
     /**
      * Number of cells in Collection.
      */
@@ -50,7 +55,7 @@ export type CollectionProps = {
      *   cellRenderer: Function
      * }): Array<PropTypes.node>
      */
-    cellGroupRenderer?: CollectionCellGroupRenderer | undefined;
+    cellGroupRenderer?: CollectionCellGroupRenderer;
     /**
      * Responsible for rendering a cell given an row and column index.
      * Should implement the following interface: ({ index: number, key: string, style: object }): PropTypes.element
@@ -64,28 +69,28 @@ export type CollectionProps = {
     /**
      * Optional custom CSS class name to attach to root Collection element.
      */
-    className?: string | undefined;
+    className?: string;
     height: number;
-    horizontalOverscanSize?: number | undefined;
+    horizontalOverscanSize?: number;
     /**
      * Optional custom id to attach to root Collection element.
      */
-    id?: string | undefined;
-    noContentRenderer?: (() => JSX.Element) | undefined;
+    id?: string;
+    noContentRenderer?: () => JSX.Element;
     /**
      * Callback invoked whenever the scroll offset changes within the inner
      * scrollable region: ({ clientHeight, clientWidth, scrollHeight, scrollLeft, scrollTop, scrollWidth }): void
      */
-    onScroll?: ((params: ScrollParams) => any) | undefined;
+    onScroll?: (params: ScrollParams) => any;
     /**
      * Callback invoked with information about the section of the Collection
      * that was just rendered: ({ indices: Array<number> }): void
      */
-    onSectionRendered?: ((params: SectionRenderedParams) => any) | undefined;
+    onSectionRendered?: (params: SectionRenderedParams) => any;
     /**
      * Horizontal offset
      */
-    scrollLeft?: number | undefined;
+    scrollLeft?: number;
     /**
      * Controls the alignment of scrolled-to-cells. The default ("auto") scrolls
      * the least amount possible to ensure that the specified cell is fully
@@ -93,21 +98,21 @@ export type CollectionProps = {
      * Collection and "end" to align them bottom/right. Use "center" to align
      * specified cell in the middle of container.
      */
-    scrollToAlignment?: Alignment | undefined;
-    scrollToCell?: number | undefined;
+    scrollToAlignment?: Alignment;
+    scrollToCell?: number;
     /**
      * Vertical Offset
      */
-    scrollTop?: number | undefined;
+    scrollTop?: number;
     /**
      * Optionally override the size of the sections a Collection's cells are split into.
      */
-    sectionSize?: number | undefined;
+    sectionSize?: number;
     /**
      * Optional custom inline style to attach to root Collection element.
      */
-    style?: React.CSSProperties | undefined;
-    verticalOverscanSize?: number | undefined;
+    style?: React.CSSProperties;
+    verticalOverscanSize?: number;
     /**
      * Width of Collection; this property determines the number of visible
      * (vs virtualized) columns.
@@ -129,12 +134,14 @@ export type CollectionProps = {
  */
 export class Collection extends PureComponent<CollectionProps> {
     static propTypes: {
-        "aria-label": PropTypes.Requireable<string>;
-        cellCount: PropTypes.Validator<number>;
-        cellGroupRenderer: PropTypes.Validator<CollectionCellGroupRenderer>;
-        cellRenderer: PropTypes.Validator<CollectionCellRenderer>;
-        cellSizeAndPositionGetter: PropTypes.Validator<CollectionCellSizeAndPositionGetter>;
-        sectionSize: PropTypes.Requireable<number>;
+        "aria-label": Requireable<string>;
+        cellCount: Validator<number>;
+        cellGroupRenderer: Validator<CollectionCellGroupRenderer>;
+        cellRenderer: Validator<CollectionCellRenderer>;
+        cellSizeAndPositionGetter: Validator<
+            CollectionCellSizeAndPositionGetter
+        >;
+        sectionSize: Requireable<number>;
     };
 
     static defaultProps: {
@@ -173,8 +180,6 @@ export class Collection extends PureComponent<CollectionProps> {
     cellRenderers(
         params: {
             isScrolling: boolean;
-        } & SizeInfo,
+        } & SizeInfo
     ): React.ReactNode[];
 }
-
-export default Collection;

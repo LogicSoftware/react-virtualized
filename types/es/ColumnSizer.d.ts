@@ -1,5 +1,4 @@
-import type * as PropTypes from "prop-types";
-import { PureComponent } from "react";
+import { PureComponent, Validator, Requireable } from "react";
 
 export type SizedColumnProps = {
     adjustedWidth: number;
@@ -20,11 +19,11 @@ export type ColumnSizerProps = {
      */
     children: (props: SizedColumnProps) => React.ReactNode;
     /** Optional maximum allowed column width */
-    columnMaxWidth?: number | undefined;
+    columnMaxWidth?: number;
     /** Optional minimum allowed column width */
-    columnMinWidth?: number | undefined;
+    columnMinWidth?: number;
     /** Number of columns in Grid or Table child */
-    columnCount?: number | undefined;
+    columnCount?: number;
     /** Width of Grid or Table child */
     width: number;
     /**
@@ -41,12 +40,10 @@ export type ColumnSizerProps = {
  */
 export class ColumnSizer extends PureComponent<ColumnSizerProps> {
     static propTypes: {
-        children: PropTypes.Validator<(props: SizedColumnProps) => React.ReactNode>;
-        columnMaxWidth: PropTypes.Requireable<number>;
-        columnMinWidth: PropTypes.Requireable<number>;
-        columnCount: PropTypes.Validator<number>;
-        width: PropTypes.Validator<number>;
+        children: Validator<(props: SizedColumnProps) => React.ReactNode>;
+        columnMaxWidth: Requireable<number>;
+        columnMinWidth: Requireable<number>;
+        columnCount: Validator<number>;
+        width: Validator<number>;
     };
 }
-
-export default ColumnSizer;

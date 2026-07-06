@@ -1,6 +1,6 @@
 // @flow
 
 export type ScrollIndices = {
-    scrollToColumn: number,
-    scrollToRow: number,
+  scrollToColumn: number,
+  scrollToRow: number,
 };

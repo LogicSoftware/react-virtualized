@@ -1,5 +1,5 @@
 /** @flow */
-import MultiGrid from "./MultiGrid";
+import MultiGrid from './MultiGrid';
 
 export default MultiGrid;
-export { MultiGrid };
+export {MultiGrid};

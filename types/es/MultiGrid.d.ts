@@ -1,22 +1,21 @@
-import type * as PropTypes from "prop-types";
-import { PureComponent } from "react";
-import { CellPosition } from "./CellMeasurer";
+import { PureComponent, Validator, Requireable } from "react";
 import { GridProps } from "./Grid";
+import { CellPosition } from "./CellMeasurer";
 
 export type MultiGridProps = {
-    classNameBottomLeftGrid?: string | undefined;
-    classNameBottomRightGrid?: string | undefined;
-    classNameTopLeftGrid?: string | undefined;
-    classNameTopRightGrid?: string | undefined;
-    enableFixedColumnScroll?: boolean | undefined;
-    enableFixedRowScroll?: boolean | undefined;
-    fixedColumnCount?: number | undefined;
-    fixedRowCount?: number | undefined;
-    style?: React.CSSProperties | undefined;
-    styleBottomLeftGrid?: React.CSSProperties | undefined;
-    styleBottomRightGrid?: React.CSSProperties | undefined;
-    styleTopLeftGrid?: React.CSSProperties | undefined;
-    styleTopRightGrid?: React.CSSProperties | undefined;
+    classNameBottomLeftGrid?: string;
+    classNameBottomRightGrid?: string;
+    classNameTopLeftGrid?: string;
+    classNameTopRightGrid?: string;
+    enableFixedColumnScroll?: boolean;
+    enableFixedRowScroll?: boolean;
+    fixedColumnCount?: number;
+    fixedRowCount?: number;
+    style?: React.CSSProperties;
+    styleBottomLeftGrid?: React.CSSProperties;
+    styleBottomRightGrid?: React.CSSProperties;
+    styleTopLeftGrid?: React.CSSProperties;
+    styleTopRightGrid?: React.CSSProperties;
 } & GridProps;
 
 export type MultiGridState = {
@@ -33,19 +32,19 @@ export type MultiGridState = {
  */
 export class MultiGrid extends PureComponent<MultiGridProps, MultiGridState> {
     static propTypes: {
-        classNameBottomLeftGrid: PropTypes.Validator<string>;
-        classNameBottomRightGrid: PropTypes.Validator<string>;
-        classNameTopLeftGrid: PropTypes.Validator<string>;
-        classNameTopRightGrid: PropTypes.Validator<string>;
-        enableFixedColumnScroll: PropTypes.Validator<boolean>;
-        enableFixedRowScroll: PropTypes.Validator<boolean>;
-        fixedColumnCount: PropTypes.Validator<number>;
-        fixedRowCount: PropTypes.Validator<number>;
-        style: PropTypes.Validator<React.CSSProperties>;
-        styleBottomLeftGrid: PropTypes.Validator<React.CSSProperties>;
-        styleBottomRightGrid: PropTypes.Validator<React.CSSProperties>;
-        styleTopLeftGrid: PropTypes.Validator<React.CSSProperties>;
-        styleTopRightGrid: PropTypes.Validator<React.CSSProperties>;
+        classNameBottomLeftGrid: Validator<string>;
+        classNameBottomRightGrid: Validator<string>;
+        classNameTopLeftGrid: Validator<string>;
+        classNameTopRightGrid: Validator<string>;
+        enableFixedColumnScroll: Validator<boolean>;
+        enableFixedRowScroll: Validator<boolean>;
+        fixedColumnCount: Validator<number>;
+        fixedRowCount: Validator<number>;
+        style: Validator<React.CSSProperties>;
+        styleBottomLeftGrid: Validator<React.CSSProperties>;
+        styleBottomRightGrid: Validator<React.CSSProperties>;
+        styleTopLeftGrid: Validator<React.CSSProperties>;
+        styleTopRightGrid: Validator<React.CSSProperties>;
     };
 
     static defaultProps: {
@@ -75,8 +74,12 @@ export class MultiGrid extends PureComponent<MultiGridProps, MultiGridState> {
     measureAllCells(): void;
 
     /** See Grid#recomputeGridSize */
-    recomputeGridSize(params?: { columnIndex?: number | undefined; rowIndex?: number | undefined }): void;
-    static getDerivedStateFromProps(nextProps: MultiGridProps, prevState: MultiGridState): MultiGridState | null;
+    recomputeGridSize(params?: {
+        columnIndex?: number;
+        rowIndex?: number;
+    }): void;
+    static getDerivedStateFromProps(
+        nextProps: MultiGridProps,
+        prevState: MultiGridState
+    ): MultiGridState | null;
 }
-
-export default MultiGrid;

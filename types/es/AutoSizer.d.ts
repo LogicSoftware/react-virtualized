@@ -1,4 +1,5 @@
-import { JSX, PureComponent } from "react";
+import { PureComponent, Validator, Requireable } from "react";
+import * as PropTypes from "prop-types";
 
 export type Size = {
     height: number;
@@ -14,33 +15,33 @@ export type AutoSizerProps = {
      */
     children: (props: Size) => React.ReactNode;
     /**
-     *     Optional custom CSS class name to attach to root AutoSizer element.
+     * 	Optional custom CSS class name to attach to root AutoSizer element.
      * This is an advanced property and is not typically necessary.
      */
-    className?: string | undefined;
+    className?: string;
     /**
      * Height passed to child for initial render; useful for server-side rendering.
      * This value will be overridden with an accurate height after mounting.
      */
-    defaultHeight?: number | undefined;
+    defaultHeight?: number;
     /**
      * Width passed to child for initial render; useful for server-side rendering.
      * This value will be overridden with an accurate width after mounting.
      */
-    defaultWidth?: number | undefined;
+    defaultWidth?: number;
     /** Disable dynamic :height property */
-    disableHeight?: boolean | undefined;
+    disableHeight?: boolean;
     /** Disable dynamic :width property */
-    disableWidth?: boolean | undefined;
+    disableWidth?: boolean;
     /** Nonce of the inlined stylesheet for Content Security Policy */
-    nonce?: string | undefined;
+    nonce?: string;
     /** Callback to be invoked on-resize: ({ height, width }) */
-    onResize?: ((info: Size) => any) | undefined;
+    onResize?: (info: Size) => any;
     /**
      * Optional custom inline style to attach to root AutoSizer element.
      * This is an advanced property and is not typically necessary.
      */
-    style?: React.CSSProperties | undefined;
+    style?: React.CSSProperties;
     /**
      * PLEASE NOTE
      * The [key: string]: any; line is here on purpose
@@ -71,5 +72,3 @@ export class AutoSizer extends PureComponent<AutoSizerProps, Size> {
 
     render(): JSX.Element;
 }
-
-export default AutoSizer;

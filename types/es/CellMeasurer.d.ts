@@ -4,7 +4,12 @@ export type CellMeasurerCacheInterface = {
     hasFixedWidth(): boolean;
     hasFixedHeight(): boolean;
     has(rowIndex: number, columnIndex: number): boolean;
-    set(rowIndex: number, columnIndex: number, width: number, height: number): void;
+    set(
+        rowIndex: number,
+        columnIndex: number,
+        width: number,
+        height: number
+    ): void;
     getHeight(rowIndex: number, columnIndex?: number): number;
     getWidth(rowIndex: number, columnIndex?: number): number;
 };
@@ -12,13 +17,13 @@ export type CellMeasurerCacheInterface = {
 export type KeyMapper = (rowIndex: number, columnIndex: number) => any;
 
 export type CellMeasurerCacheParams = {
-    defaultHeight?: number | undefined;
-    defaultWidth?: number | undefined;
-    fixedHeight?: boolean | undefined;
-    fixedWidth?: boolean | undefined;
-    minHeight?: number | undefined;
-    minWidth?: number | undefined;
-    keyMapper?: KeyMapper | undefined;
+    defaultHeight?: number;
+    defaultWidth?: number;
+    fixedHeight?: boolean;
+    fixedWidth?: boolean;
+    minHeight?: number;
+    minWidth?: number;
+    keyMapper?: KeyMapper;
 };
 export class CellMeasurerCache implements CellMeasurerCacheInterface {
     constructor(params?: CellMeasurerCacheParams);
@@ -33,7 +38,12 @@ export class CellMeasurerCache implements CellMeasurerCacheInterface {
     getWidth(rowIndex: number, columnIndex: number): number;
     has(rowIndex: number, columnIndex: number): boolean;
     rowHeight: (params: { index: number }) => number;
-    set(rowIndex: number, columnIndex: number, width: number, height: number): void;
+    set(
+        rowIndex: number,
+        columnIndex: number,
+        width: number,
+        height: number
+    ): void;
 }
 
 export type CellPosition = {
@@ -42,23 +52,20 @@ export type CellPosition = {
 };
 
 export type MeasuredCellParent = {
-    invalidateCellSizeAfterRender?: ((cell: CellPosition) => void) | undefined;
-    recomputeGridSize?: ((cell: CellPosition) => void) | undefined;
-};
-
-export type CellMeasurerChildProps = {
-    measure: () => void;
-    registerChild: (element?: Element | null) => void;
+    invalidateCellSizeAfterRender?: (cell: CellPosition) => void;
+    recomputeGridSize?: (cell: CellPosition) => void;
 };
 
 export type CellMeasurerProps = {
     cache: CellMeasurerCacheInterface;
-    children: ((props: CellMeasurerChildProps) => React.ReactNode) | React.ReactNode;
-    columnIndex?: number | undefined;
-    index?: number | undefined;
+    children:
+        | ((props: { measure: () => void }) => React.ReactNode)
+        | React.ReactNode;
+    columnIndex?: number;
+    index?: number;
     parent: MeasuredCellParent;
-    rowIndex?: number | undefined;
-    style?: React.CSSProperties | undefined;
+    rowIndex?: number;
+    style?: React.CSSProperties;
     /**
      * PLEASE NOTE
      * The [key: string]: any; line is here on purpose
@@ -74,5 +81,3 @@ export type CellMeasurerProps = {
  * Cached-content is not be re-measured.
  */
 export class CellMeasurer extends PureComponent<CellMeasurerProps> {}
-
-export default CellMeasurer;

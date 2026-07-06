@@ -1,2 +1,1 @@
-export * from "../es/MultiGrid";
-export { MultiGrid as default } from "../es/MultiGrid";
+export * from '../es/MultiGrid';
